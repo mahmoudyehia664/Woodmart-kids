@@ -53,8 +53,9 @@ public class Header {
      * @return object of the page that the linkText refer to
      */
     public Object openPageFromMiddlePartOfHeader(String linkText){
-        String xpath="//ul[@id='menu-main-navigation']//span[.='"+linkText+"']";
-        driver.findElement(By.xpath(xpath)).click();
+//        String xpath="//ul[@id='menu-main-navigation']//span[.='"+linkText+"']";
+//        driver.findElement(By.xpath(xpath)).click();
+        driver.findElement(By.linkText(linkText)).click();
         try {
             return Class.forName("pages."+linkText+"Page").getDeclaredConstructor(WebDriver.class).newInstance(driver);
         } catch (Exception e) {
@@ -135,6 +136,31 @@ public class Header {
     }
     public String getCartContentNumberFromHeader(){
         return driver.findElement(cart).getText();
+    }
+
+    /**
+     *
+     * @return array contain title and price and quantity for each product
+     */
+    public Object[][] getProductsFromMiniCart(){
+        String currentUrl = driver.getCurrentUrl();
+        if (currentUrl.endsWith("/cart/") || currentUrl.endsWith("/checkout/")) {
+            System.out.println("Mini cart not working in this page");
+            return null;
+        }
+        actions=new Actions(driver);
+        actions.moveToElement(driver.findElement(cart)).perform();
+        List<WebElement> products=driver.findElements(By.cssSelector(".wd-dropdown-cart .mini_cart_item"));
+        Object[][] productsDetails=new Object[products.size()][3];
+        int i=0;
+        for (WebElement product:products){
+            productsDetails[i][0]=product.findElement(By.cssSelector("wd-entities-title")).getText();
+            productsDetails[i][1]=product.findElement(By.cssSelector("qty")).getAttribute("value");
+            productsDetails[i][2]=product.findElement(By.tagName("bdi")).getText();
+            i++;
+        }
+        System.out.println(productsDetails.length);
+        return productsDetails;
     }
 
 
