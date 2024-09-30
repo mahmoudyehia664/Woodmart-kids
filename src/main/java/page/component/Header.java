@@ -163,7 +163,6 @@ public class Header {
         return productsDetails;
     }
 
-
     /**
      *
      * @param index 0-->USD , 1-->EGP , 2-->EUR
