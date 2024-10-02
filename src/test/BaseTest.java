@@ -24,13 +24,33 @@ public class BaseTest {
 //        System.out.println(homePage.productCart.selectProduct(226).getProductBrand());
 //        System.out.println(homePage.productCart.selectProduct(226).getProductPrice());
 //        assertEquals(homePage.header.getWishlistContentNumberFromHeader(),"1","There is a problem in add to wishlist functionality");
-        System.out.println(homePage
-                            .productCart
-                            .selectProduct("Zip Growsuit")
-                            .quickView
-                            .openQuickView()
-                            .getAllProductDetails());
-        homePage.closQuickView();
+        homePage.productCart.selectProduct("3 Pack Baby Socks").openQueckView().setQuantity(10).addToCart().continueShopping();
+//        homePage.productCart.selectProduct("3 Pack Baby Socks").addSimpleProductToCart().continueShopping();
+        homePage.productCart.selectProduct("Bunny Quilted Growsuit").addSimpleProductToCart().closPopupAddedToCart();
+        homePage.header.openDropDownCart().dealWithQuantity(2).plusQuantity();
+        homePage.header.openDropDownCart().dealWithQuantity(2).plusQuantity();
+        homePage.header.openDropDownCart().dealWithQuantity(2).minusQuantity();
+        homePage.header.openDropDownCart().dealWithQuantity(2).plusQuantity();
+        homePage.header.openDropDownCart().dealWithQuantity(2).minusQuantity();
+        homePage.header.openDropDownCart().openCheckoutPage();
+//        System.out.println(homePage.header.openDropDownCart().dealWithQuantity(2).getQuantity());
+//        System.out.println(homePage.header.openDropDownCart().getProductQuantity(2));
+//        homePage.header.openDropDownCart().deleteProductFromCart(1);
+//        homePage.header.openCartPage();
+//        System.out.println(homePage.header.getCartContentNumberFromHeader());
+//        System.out.println(homePage
+//                .header
+//                .openDropDownCart()
+//                .getNumberOfProductsInTheCart());
+//        System.out.println(homePage
+//                .header
+//                .openDropDownCart()
+//                .getAllProductsDataFromMiniCart());
+//        System.out.println(homePage
+//                .header
+//                .openDropDownCart()
+//                .getAllProductsDataFromMiniCart());
+//        homePage.closQuickView();
 //        ShopPage shopPage= (ShopPage) homePage.header.openPageFromMiddlePartOfHeader("Shop");
 //        shopPage.header.openPageFromMiddlePartOfHeader("Home");
 //        homePage.categories.openCategoryPage("Toys");

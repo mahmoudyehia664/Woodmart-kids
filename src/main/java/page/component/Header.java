@@ -20,10 +20,12 @@ public class Header {
     private final By loginText=By.cssSelector("[title='My account'] .wd-tools-text");
     private final By wishlist=By.cssSelector("[title='Wishlist products'] .wd-tools-count");
     private final By compare=By.cssSelector("[title='Compare products'] .wd-tools-count");
-    private final By cart=By.cssSelector("[title='Shopping cart'] .wd-tools-count");
+    private final By cartProduct =By.cssSelector("[title='Shopping cart']");
+    private final By cartProductCount =By.cssSelector("[title='Shopping cart'] .wd-cart-number");
 
     public Header(WebDriver _driver){
         driver=_driver;
+        actions=new Actions(driver);
     }
 
     /**
@@ -90,12 +92,16 @@ public class Header {
         return driver.findElement(loginText).getText().endsWith(userName);
     }
 
+    /**
+     *
+     * @param partName the exact name of the page you want open that appear in the header
+     * @return object from the page class that you select
+     */
     public Object openOneOfMyAccountParts(String partName){
         if(driver.findElement(loginText).getText().equals("Login / Register")){
             System.out.println("You must login to show your account details");
             return null;
         }else{
-            actions=new Actions(driver);
             actions.moveToElement(driver.findElement(loginText)).perform();
             wait=new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'wd-dropdown-my-account')]//span[.='"+partName+"']"))).click();
@@ -131,37 +137,21 @@ public class Header {
     }
 
     public CartPage openCartPage(){
-        driver.findElement(cart).click();
+        driver.findElement(cartProduct).click();
         return new CartPage(driver);
     }
     public String getCartContentNumberFromHeader(){
-        return driver.findElement(cart).getText();
+        return driver.findElement(cartProductCount).getText();
     }
-
-    /**
-     *
-     * @return array contain title and price and quantity for each product
-     */
-    public Object[][] getProductsFromMiniCart(){
+    public DropdownCartFromHeader openDropDownCart(){
         String currentUrl = driver.getCurrentUrl();
         if (currentUrl.endsWith("/cart/") || currentUrl.endsWith("/checkout/")) {
             System.out.println("Mini cart not working in this page");
             return null;
         }
-        actions=new Actions(driver);
-        actions.moveToElement(driver.findElement(cart)).perform();
-        List<WebElement> products=driver.findElements(By.cssSelector(".wd-dropdown-cart .mini_cart_item"));
-        Object[][] productsDetails=new Object[products.size()][3];
-        int i=0;
-        for (WebElement product:products){
-            productsDetails[i][0]=product.findElement(By.cssSelector("wd-entities-title")).getText();
-            productsDetails[i][1]=product.findElement(By.cssSelector("qty")).getAttribute("value");
-            productsDetails[i][2]=product.findElement(By.tagName("bdi")).getText();
-            i++;
-        }
-        System.out.println(productsDetails.length);
-        return productsDetails;
+        return new DropdownCartFromHeader(driver);
     }
+
 
     /**
      *

@@ -16,8 +16,7 @@ import java.time.Duration;
 
 public class ProductCart {
     private final WebDriver driver;
-    private WebElement productCart;
-    public QuickView quickView;
+    private WebElement productCart=null;
     private Actions actions;
     private WebDriverWait wait;
     WebElement addToWishlistButton;
@@ -36,7 +35,7 @@ public class ProductCart {
     public ProductCart selectProduct(int productId){
         actions=new Actions(driver);
         productCart=driver.findElement(By.cssSelector("div[data-id='"+productId+"']"));
-        quickView=new QuickView(driver,productCart);
+//        quickView=new QuickView(driver,productCart);
         actions.moveToElement(productCart).perform();
         return this;
     }
@@ -51,10 +50,17 @@ public class ProductCart {
         productCart = productLink.findElement(By.xpath("ancestor::div[contains(@class, 'product-grid-item')]"));
         actions=new Actions(driver);
         actions.moveToElement(productCart).perform();
-        quickView=new QuickView(driver,productCart);
+//        quickView=new QuickView(driver,productCart);
         return this;
     }
-    public ProductCart addSimpleProductToCart(){
+    public QuickView openQueckView(){
+        if (productCart==null){
+            System.out.println("You must select the product first");
+            return null;
+        }
+        return new QuickView(driver,productCart);
+    }
+    public PopupAddedToCart addSimpleProductToCart(){
         wait=new WebDriverWait(driver,Duration.ofSeconds(5));
         try {
             wait.until(ExpectedConditions.visibilityOf(productCart.findElement(By.className("product_type_simple")))).click();
@@ -64,7 +70,7 @@ public class ProductCart {
         }
         WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("popup-added_to_cart")));
-        return this;
+        return new PopupAddedToCart(driver);
     }
     public ProductPage addProductWithSoldOutLabelToCart(){
         if (productCart.getAttribute("class").contains("outofstock")){
@@ -82,7 +88,7 @@ public class ProductCart {
      * @param brandIndex start from 1
      * @return
      */
-    public ProductCart addVariableProductToCart(int sizeIndex,String colorName,int brandIndex){
+    public PopupAddedToCart addVariableProductToCart(int sizeIndex,String colorName,int brandIndex){
         wait=new WebDriverWait(driver, Duration.ofSeconds(5));
         try {
         wait.until(ExpectedConditions.elementToBeClickable(productCart.findElement(By.className("product_type_variable")))).click();
@@ -96,17 +102,7 @@ public class ProductCart {
         new Select(productCart.findElement(By.id("pa_brand"))).selectByIndex(brandIndex);
         productCart.findElement(By.className("single_add_to_cart_button")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("popup-added_to_cart")));
-        return this;
-    }
-    public CartPage openCartPageAfterAddProductToCart(){
-        driver.findElement(By.cssSelector(".view-cart")).click();
-        return new CartPage(driver);
-    }
-    public void continueShoppingAfterAddProductToCart(){
-        driver.findElement(By.cssSelector(".close-popup")).click();
-    }
-    public void closPopupAfterAddProductToCart(){
-        driver.findElement(By.cssSelector(".mfp-close")).click();
+        return new PopupAddedToCart(driver);
     }
 
     public ProductPage openProductPage(){
