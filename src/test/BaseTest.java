@@ -15,8 +15,9 @@ public class BaseTest {
         driver.get("https://test-iti-testing-project-v1.pantheonsite.io/");
         homePage=new HomePage(driver);
         ShopPage shopPage=(ShopPage) homePage.header.openPageFromMiddlePartOfHeader("Shop");
-        shopPage.applyPriceFilter(15,423).applyColorFilter("Blue").applyBrandFilter("MORI").clearPriceFilter("max")/*.header.openPageFromLeftPartOfHeader(1)*/;
+        shopPage.applyPriceFilter(15,423).applyFilter("Blue").applyFilter("MORI").applyFilter("0 - 3 Months")/*.header.openPageFromLeftPartOfHeader(1)*/;
         System.out.println(shopPage.getAppliedFilters());
+        shopPage.categories.openCategoryPage("Toys");
 //        System.out.println(shopPage.filterSetMinPrice(100).filterSetMaxPrice(420).applyPriceFilter().applyColorFilter("Blue").getColorCount("Blue"));
 
 //        homePage.productCart

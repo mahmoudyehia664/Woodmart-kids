@@ -4,14 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
+import page.component.Categories;
 
 public class AbstractShopAndCategoryPage extends AbstractPage{
-    public AbstractShopAndCategoryPage(WebDriver driver){
-        super(driver);
-    }
+    public Categories categories;
     WebElement baseElement;
-
     By baseElementLocator=By.cssSelector(".elementor-widget-wd_sidebar .elementor-widget-container");
     By appliedFilters=By.cssSelector(".wd-active-filters .widget");
     By maxPriceButton =By.xpath("(//span[contains(@class,'ui-slider-handle')])[2]");
@@ -19,6 +16,12 @@ public class AbstractShopAndCategoryPage extends AbstractPage{
     By minPrice=By.id("min_price");
     By maxPrice=By.id("max_price");
     By priceFilterButton=By.tagName("button");
+    By clearAllFiltersButton=By.cssSelector(".wd-clear-filters a");
+
+    public AbstractShopAndCategoryPage(WebDriver driver){
+        super(driver);
+        categories=new Categories(driver);
+    }
 
     private WebElement getBaseElement(){
         try {
@@ -90,50 +93,32 @@ public class AbstractShopAndCategoryPage extends AbstractPage{
         return this;
     }
 
-    public AbstractShopAndCategoryPage applyColorFilter(String color){
-        getBaseElement().findElement(By.xpath("//a[contains(.,'"+color+"')]")).click();
+    public AbstractShopAndCategoryPage applyFilter(String filter){
+        getBaseElement().findElement(By.xpath("//a[contains(.,'"+filter+"')]")).click();
         waitForMilliseconds(2000);
         return this;
     }
-    public int getColorCount(String color){
-        return Integer.parseInt(getBaseElement().findElement(By.xpath("//a[contains(.,'"+color+"')]/ancestor::li/span")).getText());
-    }
-    public AbstractShopAndCategoryPage applyBrandFilter(String brand){
-        getBaseElement().findElement(By.xpath("//a[contains(.,'"+brand+"')]")).click();
-        waitForMilliseconds(2000);
-        return this;
-    }
-    public int getBrandCount(String brand){
-        return Integer.parseInt(getBaseElement().findElement(By.xpath("//a[contains(.,'"+brand+"')]/ancestor::li/span")).getText());
+    public int getFilterCount(String filter){
+        return Integer.parseInt(getBaseElement().findElement(By.xpath("//a[contains(.,'"+filter+"')]/ancestor::li/span")).getText());
     }
     public String getAppliedFilters(){
-        return driver.findElement(appliedFilters).getText().replace("\nMin","").replace("\nMax","").replace("\n",",");
-    }
-    private void clearMinPriceFilter(){
-        driver.findElement(By.xpath("//a[contains(.,'Min')]")).click();
-        waitForMilliseconds(3000);
-    }
-    private void clearMaxPriceFilter(){
-        driver.findElement(By.xpath("//a[contains(.,'Max')]")).click();
-        waitForMilliseconds(3000);
-    }
-    public AbstractShopAndCategoryPage clearPriceFilter(){
-        clearMaxPriceFilter();
-        clearMinPriceFilter();
-        return this;
-    }
-    public AbstractShopAndCategoryPage clearPriceFilter(String maxOrMin){
-        switch (maxOrMin.toLowerCase()){
-            case "max":
-                clearMaxPriceFilter();
-                break;
-            case "min":
-                clearMinPriceFilter();
-                break;
-            default:
-                System.out.println("You should insert max or min");
+        try {
+            return driver.findElement(appliedFilters).getText().replace("\nMin","").replace("\nMax","").replace("\n",",");
+        } catch (Exception e) {
+            return "There is no applied filters";
         }
+    }
+    public AbstractShopAndCategoryPage clearFilter(String filterName){
+        driver.findElement(By.xpath("//*[@class='wd-active-filters']//a[contains(.,'"+filterName+"')]")).click();
+        waitForMilliseconds(3000);
         return this;
     }
+    public AbstractShopAndCategoryPage clearAllFilters(){
+        driver.findElement(clearAllFiltersButton).click();
+        waitForMilliseconds(3000);
+        return this;
+    }
+
+
 
 }
