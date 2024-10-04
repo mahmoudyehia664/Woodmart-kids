@@ -7,7 +7,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.CartPage;
 import pages.CompareProductsPage;
 import pages.ProductPage;
 import pages.WishlistPage;
@@ -53,7 +52,7 @@ public class ProductCart {
 //        quickView=new QuickView(driver,productCart);
         return this;
     }
-    public QuickView openQueckView(){
+    public QuickView openQuickView(){
         if (productCart==null){
             System.out.println("You must select the product first");
             return null;
@@ -155,6 +154,4 @@ public class ProductCart {
     public String getProductURL(){
         return productCart.findElement(By.cssSelector(".wd-entities-title a")).getAttribute("href");
     }
-
-
 }
