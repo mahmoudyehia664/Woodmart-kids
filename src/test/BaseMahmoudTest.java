@@ -1,23 +1,31 @@
+import annotation.DataProviderIndex;
+import data.Data;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 import pages.HomePage;
-import pages.ShopPage;
+import pages.LoginAndRegisterPage;
 
 
-public class BaseTest {
+public class BaseMahmoudTest {
     public WebDriver driver;
     public HomePage homePage;
     @Test
     public void base(){
         driver=new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("https://test-iti-testing-project-v1.pantheonsite.io/");
-        homePage=new HomePage(driver);
-        ShopPage shopPage=(ShopPage) homePage.header.openPageFromMiddlePartOfHeader("Shop");
-        shopPage.applyPriceFilter(15,423).applyFilter("Blue").applyFilter("MORI").applyFilter("0 - 3 Months")/*.header.openPageFromLeftPartOfHeader(1)*/;
-        System.out.println(shopPage.getAppliedFilters());
-        shopPage.categories.openCategoryPage("Toys");
+        homePage=new HomePage(driver,"https://test-iti-testing-project-v1.pantheonsite.io/");
+//        ShopPage shopPage=(ShopPage) homePage.header.openPageFromMiddlePartOfHeader("Shop");
+//        shopPage.applyPriceFilter(15,423).applyFilter("Blue").applyFilter("MORI").applyFilter("0 - 3 Months")/*.header.openPageFromLeftPartOfHeader(1)*/;
+//        System.out.println(shopPage.getAppliedFilters());
+//        shopPage.categories.openCategoryPage("Toys");
+        LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage)homePage.header.openMyAccountPage();
+        loginAndRegisterPage.login("mm","J9L16187asd+");
+        loginAndRegisterPage.header.logout();
+//        System.out.println(loginAndRegisterPage.checkRegisterSuccess());
+//        loginAndRegisterPage.openLostPassword().lostPassword("mb");
+//        loginAndRegisterPage.register("mm","mm@gmail.com","J9L16187asd+");
+//        System.out.println(driver.getCurrentUrl());
 //        System.out.println(shopPage.filterSetMinPrice(100).filterSetMaxPrice(420).applyPriceFilter().applyColorFilter("Blue").getColorCount("Blue"));
 
 //        homePage.productCart

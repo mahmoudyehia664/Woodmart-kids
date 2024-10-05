@@ -7,8 +7,9 @@ import page.component.ProductCart;
 public class HomePage extends AbstractPage{
     public Categories categories;
     public ProductCart productCart;
-    public HomePage(WebDriver driver){
+    public HomePage(WebDriver driver,String homePageLink){
         super(driver);
+        driver.get(homePageLink);
         categories=new Categories(driver);
         productCart=new ProductCart(driver);
     }

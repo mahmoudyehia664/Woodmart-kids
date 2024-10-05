@@ -84,12 +84,19 @@ public class Header {
         closeSearchScreen();
         return true;
     }
-    public MyAccountPage openMyAccountPage(){
-        driver.findElement(loginText).click();
-        return new MyAccountPage(driver);
-    }
     public boolean checkUserLoginOrNot(String userName){
+        if (userName.isEmpty()){
+            return false;
+        }
         return driver.findElement(loginText).getText().endsWith(userName);
+    }
+    public Object openMyAccountPage(){
+        if (driver.findElement(loginText).getText().equals("Login / Register")){
+            driver.findElement(loginText).click();
+            return new LoginAndRegisterPage(driver);
+        }else {
+            return new DashboardPage(driver);
+        }
     }
 
     /**
@@ -117,6 +124,18 @@ public class Header {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    public LoginAndRegisterPage logout(){
+        if(driver.findElement(loginText).getText().equals("Login / Register")){
+            System.out.println("You must login to be able to logout");
+            return null;
+        }else{
+            actions.moveToElement(driver.findElement(loginText)).perform();
+            wait=new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'wd-dropdown-my-account')]//span[.='Logout']"))).click();
+            return new LoginAndRegisterPage(driver);
         }
     }
 
