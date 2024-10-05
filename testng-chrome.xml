@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.1.dtd" >
+<suite name="All Test Suite">
+    <listeners>
+        <listener class-name="utils.Listeners"/>
+    </listeners>
+    <parameter name="browser" value="Chrome"/>
+    <test name="Woodmart-kids-chrome">
+        <classes>
+<!--            <class name="register.RegisterTest"/>-->
+            <class name="login.LoginTest"/>
+        </classes>
+    </test>
+</suite>
