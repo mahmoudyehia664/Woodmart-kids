@@ -14,4 +14,11 @@ public class LostPasswordPage extends AbstractPage{
         driver.findElement(By.cssSelector("[value='Reset password']")).click();
         return this;
     }
+    public String checkLostPassword(){
+        try {
+            return driver.findElement(By.cssSelector(".woocommerce-error li")).getText();
+        } catch (Exception e) {
+            return driver.findElement(By.cssSelector(".woocommerce-message")).getText();
+        }
+    }
 }

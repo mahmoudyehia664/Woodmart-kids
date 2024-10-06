@@ -6,6 +6,8 @@ import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginAndRegisterPage;
 
+import java.util.Arrays;
+
 
 public class BaseMahmoudTest {
     public WebDriver driver;
@@ -15,13 +17,14 @@ public class BaseMahmoudTest {
         driver=new ChromeDriver();
         driver.manage().window().maximize();
         homePage=new HomePage(driver,"https://test-iti-testing-project-v1.pantheonsite.io/");
+        homePage.getAllPostTitles();
 //        ShopPage shopPage=(ShopPage) homePage.header.openPageFromMiddlePartOfHeader("Shop");
 //        shopPage.applyPriceFilter(15,423).applyFilter("Blue").applyFilter("MORI").applyFilter("0 - 3 Months")/*.header.openPageFromLeftPartOfHeader(1)*/;
 //        System.out.println(shopPage.getAppliedFilters());
 //        shopPage.categories.openCategoryPage("Toys");
-        LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage)homePage.header.openMyAccountPage();
-        loginAndRegisterPage.login("mm","J9L16187asd+");
-        loginAndRegisterPage.header.logout();
+//        LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage)homePage.header.openMyAccountPage();
+//        loginAndRegisterPage.login("mm","J9L16187asd+");
+//        loginAndRegisterPage.header.logout();
 //        System.out.println(loginAndRegisterPage.checkRegisterSuccess());
 //        loginAndRegisterPage.openLostPassword().lostPassword("mb");
 //        loginAndRegisterPage.register("mm","mm@gmail.com","J9L16187asd+");

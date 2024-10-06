@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page.component.Header;
 
@@ -13,6 +14,7 @@ public abstract class AbstractPage {
     protected WebDriver driver;
     protected WebDriverWait wait;
     protected JavascriptExecutor js;
+    protected Actions actions;
     public Header header;
 
     public AbstractPage(WebDriver _driver){
@@ -25,7 +27,29 @@ public abstract class AbstractPage {
     protected JavascriptExecutor getJs(){
         return (JavascriptExecutor)driver;
     }
+    protected Actions getActions(){
+        return new Actions(driver);
+    }
     public void closQuickView(){
         driver.findElement(By.tagName("body")).sendKeys(Keys.ESCAPE);
+    }
+
+    /**
+     *
+     * @return true --> page found      false --> page not found
+     */
+    public boolean checkPageFoundOrNot(){
+        try {
+            driver.findElement(By.cssSelector(".page-header h3"));
+            return false;
+        } catch (Exception e) {
+            return true;
+        }
+    }
+    public String getPageTitle(){
+        return driver.getTitle();
+    }
+    public String getPageURL(){
+        return driver.getCurrentUrl();
     }
 }
