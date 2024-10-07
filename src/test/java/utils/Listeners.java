@@ -7,13 +7,17 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.util.Arrays;
+
 import static utils.ExtentReport.configExtentReport;
 
 
 public class Listeners implements ITestListener {
     ExtentReports report;
     ExtentTest test;
-    private static final ThreadLocal<ExtentTest> saveTestObject=new ThreadLocal<ExtentTest>();
+    String parameters=null;
+    Object[] params;
+    private static final ThreadLocal<ExtentTest> saveTestObject=new ThreadLocal<>();
 
     @Override
     public void onStart(ITestContext context) {
@@ -25,7 +29,9 @@ public class Listeners implements ITestListener {
     }
     @Override
     public void onTestStart(ITestResult result) {
-        test=report.createTest(result.getMethod().getMethodName());
+        params = result.getParameters();
+        parameters = (params.length == 0) ? "" : Arrays.toString(params);
+        test=report.createTest(result.getMethod().getMethodName()+parameters);
         saveTestObject.set(test);
     }
     @Override
@@ -35,7 +41,11 @@ public class Listeners implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         saveTestObject.get().fail(result.getThrowable());
-        saveTestObject.get().addScreenCaptureFromPath("/src/test/screenshot/"+result.getName()+" in "+ result.getTestContext().getAttribute("browser")+" browser" +".png");
+        if (parameters==null){
+            params = result.getParameters();
+            parameters = (params.length == 0) ? "" : Arrays.toString(params);
+        }
+        saveTestObject.get().addScreenCaptureFromPath("/src/test/screenshot/"+result.getMethod().getMethodName()+parameters+" in "+ result.getTestContext().getAttribute("browser")+" browser" +".png");
     }
     @Override
     public void onTestSkipped(ITestResult result) {

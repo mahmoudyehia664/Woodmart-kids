@@ -13,6 +13,7 @@ import org.testng.annotations.*;
 import pages.HomePage;
 
 import java.io.File;
+import java.util.Arrays;
 
 
 public class BaseTest {
@@ -47,7 +48,9 @@ public class BaseTest {
         var camera=(TakesScreenshot)driver;
         File screenShot=camera.getScreenshotAs(OutputType.FILE);
         try {
-            Files.move(screenShot,new File("src/test/screenshot/"+result.getName()+" in "+ result.getTestContext().getAttribute("browser")+" browser" +".png"));
+            Object[] params = result.getParameters();
+            String parameters = (params.length == 0) ? "" : Arrays.toString(params);
+            Files.move(screenShot,new File("src/test/screenshot/"+result.getMethod().getMethodName()+parameters+" in "+ result.getTestContext().getAttribute("browser")+" browser" +".png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
