@@ -12,7 +12,8 @@ public class Categories {
     }
     public CategoryPage openCategoryPage(String linkText){
         if (driver.getCurrentUrl().equals("https://test-iti-testing-project-v1.pantheonsite.io/")){
-            new Actions(driver).moveToElement(driver.findElement(By.cssSelector(".wd-fontsize-xs"))).perform();
+            new Actions(driver).scrollByAmount(0,730).perform();
+//            new Actions(driver).scrollToElement(driver.findElement(By.cssSelector(".wd-fontsize-xs"))).perform();
         }
         driver.findElement(By.linkText(linkText)).click();
         return new CategoryPage(driver);

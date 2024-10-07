@@ -14,10 +14,10 @@ public class ContactUsPage extends AbstractPage{
         driver.findElement(By.cssSelector("[placeholder='Last name']")).sendKeys(lastName);
         driver.findElement(By.cssSelector("[placeholder='Email']")).sendKeys(email);
         driver.findElement(By.cssSelector("[placeholder='Your Message']")).sendKeys(message);
-        getActions().scrollByAmount(0,120).perform();
+        getActions().scrollByAmount(0,100).perform();
         synchronized (this) {
             try {
-                wait(1000);
+                wait(2000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

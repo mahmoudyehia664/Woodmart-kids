@@ -42,6 +42,13 @@ public class BaseTest {
     @BeforeMethod
     public void getPage(){
         driver.get("https://test-iti-testing-project-v1.pantheonsite.io/");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        // Clear local storage
+        js.executeScript("window.localStorage.clear();");
+        // Clear session storage
+        js.executeScript("window.sessionStorage.clear();");
+        // Clear cache
+        driver.manage().deleteAllCookies();
     }
 
     @AfterMethod
@@ -60,16 +67,6 @@ public class BaseTest {
     }
     @AfterTest
     public void tearDown(){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
-        // Clear local storage
-        js.executeScript("window.localStorage.clear();");
-
-        // Clear session storage
-        js.executeScript("window.sessionStorage.clear();");
-
-        // Clear cache
-        driver.manage().deleteAllCookies();
         driver.quit();
     }
 }
