@@ -3,7 +3,7 @@
     <listeners>
         <listener class-name="utils.Listeners"/>
     </listeners>
-    <parameter name="browser" value="Chrome"/>
+    <parameter name="browser" value="Firefox"/>
     <test name="Woodmart-kids-chrome">
         <classes>
 <!--            <class name="register.RegisterTest"/>-->
@@ -16,7 +16,7 @@
 <!--            <class name="home.page.BuyBundleCollectionTest"/>-->
 <!--            <class name="home.page.OpenInstagramPageTest"/>-->
 <!--            <class name="home.page.OpenPostTest"/>-->
-<!--            <class name="contactus.ContactUsTest"/>-->
+            <class name="contactus.ContactUsTest"/>
         </classes>
     </test>
 </suite>

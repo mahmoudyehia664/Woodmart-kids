@@ -15,6 +15,13 @@ public class ContactUsPage extends AbstractPage{
         driver.findElement(By.cssSelector("[placeholder='Email']")).sendKeys(email);
         driver.findElement(By.cssSelector("[placeholder='Your Message']")).sendKeys(message);
         getActions().scrollByAmount(0,120).perform();
+        synchronized (this) {
+            try {
+                wait(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         driver.findElement(By.cssSelector(".wpcf7-submit")).click();
         return this;
     }
