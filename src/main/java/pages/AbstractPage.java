@@ -38,7 +38,7 @@ public abstract class AbstractPage {
      *
      * @return true --> page found      false --> page not found
      */
-    public boolean checkPageFoundOrNot(){
+    public boolean isFound(){
         try {
             driver.findElement(By.cssSelector(".page-header h3"));
             return false;

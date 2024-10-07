@@ -24,6 +24,16 @@ public class ProductCart {
         driver=_driver;
     }
 
+    private void waitForMilliseconds(long milliseconds) {
+        synchronized (this) {
+            try {
+                wait(milliseconds);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     /*class product_type_variable,class product_type_simple , class variations , class out-of-stock*/
 
     /**
@@ -67,7 +77,6 @@ public class ProductCart {
             System.out.println("This is a variable product");
             e.printStackTrace();
         }
-        WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("popup-added_to_cart")));
         return new PopupAddedToCart(driver);
     }
@@ -108,12 +117,25 @@ public class ProductCart {
         productCart.click();
         return new ProductPage(driver);
     }
+
+    private final By loginText=By.cssSelector("[title='My account'] .wd-tools-text");
+    public boolean isUserLogin(){
+        return !driver.findElement(loginText).getText().equals("Login / Register");
+    }
+
+
     public void addToWishlist(){
         addToWishlistButton=productCart.findElement(By.cssSelector(".wd-wishlist-btn a"));
         actions=new Actions(driver);
         actions.moveToElement(addToWishlistButton).perform();
         if(productCart.findElement(By.cssSelector(".wd-wishlist-btn span")).getText().equals("Add to wishlist")){
             addToWishlistButton.click();
+            if (isUserLogin()){
+                driver.findElement(By.cssSelector(".wd-wishlist-save-btn")).click();
+                wait=new WebDriverWait(driver,Duration.ofSeconds(10));
+                wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".wd-wishlist-back-to-shop"))).click();
+            }
+            waitForMilliseconds(1000);
         }else {
             System.out.println("The product already in the wishlist");
         }

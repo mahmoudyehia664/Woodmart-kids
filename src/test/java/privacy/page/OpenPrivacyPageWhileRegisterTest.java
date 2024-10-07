@@ -10,6 +10,6 @@ public class OpenPrivacyPageWhileRegisterTest extends BaseTest {
     @Test
     public void openPrivacyPageWhileRegister(){
         LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage)homePage.header.openMyAccountPage();
-        assertTrue(loginAndRegisterPage.openPrivacyPage().checkPageFoundOrNot(),"Page Not Found");
+        assertTrue(loginAndRegisterPage.openPrivacyPage().isFound(),"Page Not Found");
     }
 }

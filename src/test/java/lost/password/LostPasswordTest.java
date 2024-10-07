@@ -16,9 +16,9 @@ public class LostPasswordTest extends BaseTest {
     @DataProviderIndex(2)
     public void lostPassword(String userNameOrEmail,String result){
         LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage)homePage.header.openMyAccountPage();
-        assertTrue(loginAndRegisterPage.checkPageFoundOrNot(), "Page Not Found");
+        assertTrue(loginAndRegisterPage.isFound(), "Page Not Found");
         LostPasswordPage lostPasswordPage=loginAndRegisterPage.openLostPassword();
-        assertTrue(lostPasswordPage.checkPageFoundOrNot(), "Page Not Found");
+        assertTrue(lostPasswordPage.isFound(), "Page Not Found");
         assertEquals(lostPasswordPage.lostPassword(userNameOrEmail).checkLostPassword(),result,"Incorrect result");
     }
 }

@@ -28,6 +28,9 @@ public class Header {
         actions=new Actions(driver);
     }
 
+    public void openHomePage(){
+        driver.findElement(By.cssSelector(".wd-main-logo")).click();
+    }
     /**
      *
      * @param index start from 1 to 3
@@ -84,7 +87,13 @@ public class Header {
         closeSearchScreen();
         return true;
     }
-    public boolean checkUserLoginOrNot(String userName){
+
+    /**
+     *
+     * @param userName
+     * @return true --> user logged in , false --> user not logged in
+     */
+    public boolean isUserLogin(String userName){
         if (userName.isEmpty()){
             return false;
         }

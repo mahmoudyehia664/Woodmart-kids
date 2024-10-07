@@ -1,10 +1,9 @@
 package base;
 
 import com.google.common.io.Files;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestContext;
@@ -25,7 +24,10 @@ public class BaseTest {
         context.setAttribute("browser", browser);
         switch (browser){
             case "Chrome":
-                driver=new ChromeDriver();
+                ChromeOptions options = new ChromeOptions();
+//                options.addArguments("disable-infobars"); // This disables the "Chrome is being controlled by automated test software" message
+                options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); // This also helps in hiding the message
+                driver=new ChromeDriver(options);
                 break;
             case "Edge":
                 driver=new EdgeDriver();
@@ -58,6 +60,16 @@ public class BaseTest {
     }
     @AfterTest
     public void tearDown(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Clear local storage
+        js.executeScript("window.localStorage.clear();");
+
+        // Clear session storage
+        js.executeScript("window.sessionStorage.clear();");
+
+        // Clear cache
+        driver.manage().deleteAllCookies();
         driver.quit();
     }
 }
