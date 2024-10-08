@@ -3,15 +3,17 @@
     <listeners>
         <listener class-name="utils.Listeners"/>
     </listeners>
-    <parameter name="browser" value="Firefox"/>
+<!--    <parameter name="browser" value="Chrome"/>-->
+    <parameter name="browser" value="Edge"/>
+<!--    <parameter name="browser" value="Firefox"/>-->
     <test name="Woodmart-kids-chrome">
         <classes>
-<!--            <class name="register.RegisterTest"/>-->
-<!--            <class name="login.LoginTest"/>-->
-<!--            <class name="lost.password.LostPasswordTest"/>-->
-<!--            <class name="privacy.page.OpenPrivacyPageWhileRegisterTest"/>-->
-<!--            <class name="home.page.OpenShopPageFromBannerTest"/>-->
-<!--            <class name="home.page.OpenCategoryPageTest"/>-->
+            <class name="register.RegisterTest"/>
+            <class name="login.LoginTest"/>
+            <class name="lost.password.LostPasswordTest"/>
+            <class name="privacy.page.OpenPrivacyPageWhileRegisterTest"/>
+            <class name="home.page.OpenShopPageFromBannerTest"/>
+            <class name="home.page.OpenCategoryPageTest"/>
             <class name="home.page.AddProductToCartTest"/>
             <class name="home.page.BuyBundleCollectionTest"/>
             <class name="home.page.OpenInstagramPageTest"/>

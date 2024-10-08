@@ -5,6 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
@@ -24,13 +25,17 @@ public class BaseTest {
         context.setAttribute("browser", browser);
         switch (browser){
             case "Chrome":
-                ChromeOptions options = new ChromeOptions();
-//                options.addArguments("disable-infobars"); // This disables the "Chrome is being controlled by automated test software" message
-                options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); // This also helps in hiding the message
-                driver=new ChromeDriver(options);
+                ChromeOptions chromeOptions = new ChromeOptions();
+//                chromeOptions.addArguments("disable-infobars"); // This disables the "Chrome is being controlled by automated test software" message
+                chromeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); // This also helps in hiding the message
+                driver=new ChromeDriver(chromeOptions);
                 break;
             case "Edge":
-                driver=new EdgeDriver();
+                EdgeOptions edgeOptions = new EdgeOptions();
+//                 Add arguments to hide automation control
+//                edgeOptions.addArguments("--disable-blink-features=AutomationControlled");
+                edgeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+                driver=new EdgeDriver(edgeOptions);
                 break;
             case "Firefox":
                 driver=new FirefoxDriver();
@@ -54,15 +59,16 @@ public class BaseTest {
     @AfterMethod
     public void recordFailure(ITestResult result){
         if (ITestResult.FAILURE == result.getStatus()){
-        var camera=(TakesScreenshot)driver;
-        File screenShot=camera.getScreenshotAs(OutputType.FILE);
-        try {
-            Object[] params = result.getParameters();
-            String parameters = (params.length == 0) ? "" : Arrays.toString(params);
-            Files.move(screenShot,new File("src/test/screenshot/"+result.getMethod().getMethodName()+parameters+" in "+ result.getTestContext().getAttribute("browser")+" browser" +".png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            var camera=(TakesScreenshot)driver;
+            File screenShot=camera.getScreenshotAs(OutputType.FILE);
+            try {
+                Object[] params = result.getParameters();
+                String parameters = (params.length == 0) ? "" : Arrays.toString(params);
+                String name=result.getMethod().getMethodName()+parameters;
+                Files.move(screenShot,new File("src/test/screenshot/"+name.replaceAll("[^a-zA-Z0-9 @.,]", "")+" in "+ result.getTestContext().getAttribute("browser")+" browser.png"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     @AfterTest

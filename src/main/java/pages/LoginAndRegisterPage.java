@@ -43,7 +43,6 @@ public class LoginAndRegisterPage extends AbstractPage{
         driver.findElement(register_button).click();
         return new DashboardPage(driver);
     }
-
     public String checkRegisterOrLoginSuccess(){
         try {
             return driver.findElement(By.cssSelector(".woocommerce-error li")).getText().replace("\n"," ");

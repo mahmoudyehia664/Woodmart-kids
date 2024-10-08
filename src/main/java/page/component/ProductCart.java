@@ -1,6 +1,7 @@
 package page.component;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -45,6 +46,9 @@ public class ProductCart {
         actions=new Actions(driver);
         productCart=driver.findElement(By.cssSelector("div[data-id='"+productId+"']"));
 //        quickView=new QuickView(driver,productCart);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        int y=productCart.getLocation().y-150;
+        js.executeScript("window.scrollTo(0, "+y+");");
         actions.moveToElement(productCart).perform();
         return this;
     }
@@ -55,9 +59,12 @@ public class ProductCart {
      * @return the ProductCart object again to continue using it is functionality
      */
     public ProductCart selectProduct(String productName){
-        WebElement productLink = driver.findElement(By.xpath("//div/h3/a[.='"+productName+"']"));
-        productCart = productLink.findElement(By.xpath("ancestor::div[contains(@class, 'product-grid-item')]"));
         actions=new Actions(driver);
+        productCart=driver.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class, 'type-product')]"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        int y=productCart.getLocation().y-155;
+        js.executeScript("window.scrollTo(0, "+y+");");
+        actions.scrollByAmount(0,5);
         actions.moveToElement(productCart).perform();
 //        quickView=new QuickView(driver,productCart);
         return this;

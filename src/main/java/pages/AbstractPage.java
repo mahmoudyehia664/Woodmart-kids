@@ -52,4 +52,13 @@ public abstract class AbstractPage {
     public String getPageURL(){
         return driver.getCurrentUrl();
     }
+    public void waitForMilliseconds(long milliseconds) {
+        synchronized (this) {
+            try {
+                wait(milliseconds);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }

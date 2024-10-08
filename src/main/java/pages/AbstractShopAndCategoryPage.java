@@ -33,15 +33,6 @@ public class AbstractShopAndCategoryPage extends AbstractPage{
         }
         return baseElement;
     }
-    public void waitForMilliseconds(long milliseconds) {
-        synchronized (this) {
-            try {
-                wait(milliseconds);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
     private String getMinPrice(){
         return baseElement.findElement(minPrice).getAttribute("data-min");
     }

@@ -13,10 +13,10 @@ public class ContactUsTest extends BaseTest {
 
     @Test(dataProvider = "getData",dataProviderClass = Data.class)
     @DataProviderIndex(6)
-    public void contactUs(String firstName,String lastName,String email,String message,String ExpectedResult){
+    public void contactUs(String firstName,String lastName,String email,String message,String expectedResult){
         ContactUsPage contactUsPage=(ContactUsPage)homePage.header.openPageFromLeftPartOfHeader(2);
         assertTrue(contactUsPage.isFound(),"Page Not Found");
         String actualResult=contactUsPage.getInTouch(firstName,lastName,email,message).checkMessageSentOrNot();
-        assertEquals(actualResult,ExpectedResult,"Incorrect functionality"/* expected ("+ExpectedResult+") but found ("+actualResult+")"*/);
+        assertEquals(actualResult,expectedResult,"Incorrect functionality"/* expected ("+ExpectedResult+") but found ("+actualResult+")"*/);
     }
 }

@@ -14,10 +14,11 @@ public class ContactUsPage extends AbstractPage{
         driver.findElement(By.cssSelector("[placeholder='Last name']")).sendKeys(lastName);
         driver.findElement(By.cssSelector("[placeholder='Email']")).sendKeys(email);
         driver.findElement(By.cssSelector("[placeholder='Your Message']")).sendKeys(message);
+        driver.findElement(By.xpath("//h4[contains(.,'Get in touch')]")).click();
         getActions().scrollByAmount(0,100).perform();
         synchronized (this) {
             try {
-                wait(2000);
+                wait(500);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -27,7 +28,10 @@ public class ContactUsPage extends AbstractPage{
     }
 
     public String checkMessageSentOrNot(){
-        return getWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".wpcf7-response-output"))).getText();
-//        return driver.findElement(By.cssSelector(".wpcf7-response-output")).getText();
+        try {
+            return getWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".wpcf7-response-output"))).getText();
+        } catch (Exception e) {
+            return "No response after 10 seconds";
+        }
     }
 }

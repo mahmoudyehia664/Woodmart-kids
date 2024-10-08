@@ -24,19 +24,30 @@ public class HomePage extends AbstractPage{
         return new ShopPage(driver);
     }
     public CheckoutPage buyBundle(){
-        getActions().moveToElement(driver.findElement(By.xpath("//a[contains(.,'Buy bundle now')]"))).click().perform();
+        WebElement element=driver.findElement(By.xpath("//a[contains(.,'Buy bundle now')]"));
+        int y=element.getLocation().y-500;
+        getJs().executeScript("window.scrollTo(0, "+y+");");
+        waitForMilliseconds(1500);
+        element.click();
         return new CheckoutPage(driver);
     }
     public void openInstagramPage(){
-        getActions().moveToElement(driver.findElement(By.cssSelector(".wd-insta-item a"))).click().perform();
+        driver.findElement(By.cssSelector(".wd-insta-item a")).click();
+//        WebElement element=driver.findElement(By.cssSelector(".wd-insta-item a"));
+//        int y=element.getLocation().y-300;
+//        getJs().executeScript("window.scrollTo(0, "+y+");");
+//        waitForMilliseconds(1500);
+//        element.click();
     }
 
     public PostPage openPostPage(String postName){
-        if (postName.equals("Why choose organic cotton for your baby")){
-            WebElement carousel = driver.findElement(By.xpath("(//div[@class='wd-carousel-wrap'])[5]"));
+        WebElement carousel = driver.findElement(By.xpath("(//div[@class='wd-carousel-wrap'])[5]"));
+//        int y=carousel.getLocation().y-300;
+//        getJs().executeScript("window.scrollTo(0, "+y+");");
+        if (postName.equals("Why choose organic cotton for your baby?")){
             getJs().executeScript("arguments[0].style.transform = 'translate3d(-333.25px, 0px, 0px)';",carousel);
         }
-        getActions().moveToElement(driver.findElement(By.xpath("//a[contains(.,'"+postName+"')]"))).click().perform();
+        driver.findElement(By.xpath("//a[contains(.,'"+postName+"')]")).click();
         return new PostPage(driver);
     }
 

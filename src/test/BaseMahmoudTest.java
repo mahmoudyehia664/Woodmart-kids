@@ -1,23 +1,34 @@
 import annotation.DataProviderIndex;
+import com.google.common.io.Files;
 import data.Data;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginAndRegisterPage;
 
+import java.io.File;
 import java.util.Arrays;
+
+import static org.testng.Assert.assertEquals;
 
 
 public class BaseMahmoudTest {
     public WebDriver driver;
     public HomePage homePage;
-    @Test
+
     public void base(){
         driver=new ChromeDriver();
         driver.manage().window().maximize();
         homePage=new HomePage(driver,"https://test-iti-testing-project-v1.pantheonsite.io/");
-        homePage.getAllPostTitles();
+
+//        homePage.getAllPostTitles();
 //        ShopPage shopPage=(ShopPage) homePage.header.openPageFromMiddlePartOfHeader("Shop");
 //        shopPage.applyPriceFilter(15,423).applyFilter("Blue").applyFilter("MORI").applyFilter("0 - 3 Months")/*.header.openPageFromLeftPartOfHeader(1)*/;
 //        System.out.println(shopPage.getAppliedFilters());
@@ -73,6 +84,5 @@ public class BaseMahmoudTest {
 //        homePage.categories.openCategoryPage("Toys");
 //        homePage.header.changeCurrency(1);
 //        System.out.println(homePage.header.sendTextToSearchFor("bunny"));
-//        driver.quit();
     }
 }

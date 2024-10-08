@@ -3,10 +3,12 @@ package utils;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import com.google.common.io.Files;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.io.File;
 import java.util.Arrays;
 
 import static utils.ExtentReport.configExtentReport;
@@ -17,6 +19,7 @@ public class Listeners implements ITestListener {
     ExtentTest test;
     String parameters=null;
     Object[] params;
+    String name;
     private static final ThreadLocal<ExtentTest> saveTestObject=new ThreadLocal<>();
 
     @Override
@@ -31,7 +34,8 @@ public class Listeners implements ITestListener {
     public void onTestStart(ITestResult result) {
         params = result.getParameters();
         parameters = (params.length == 0) ? "" : Arrays.toString(params);
-        test=report.createTest(result.getMethod().getMethodName()+parameters);
+        name=result.getMethod().getMethodName()+parameters;
+        test=report.createTest(name);
         saveTestObject.set(test);
     }
     @Override
@@ -41,11 +45,7 @@ public class Listeners implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         saveTestObject.get().fail(result.getThrowable());
-        if (parameters==null){
-            params = result.getParameters();
-            parameters = (params.length == 0) ? "" : Arrays.toString(params);
-        }
-        saveTestObject.get().addScreenCaptureFromPath("/src/test/screenshot/"+result.getMethod().getMethodName()+parameters+" in "+ result.getTestContext().getAttribute("browser")+" browser" +".png");
+        saveTestObject.get().addScreenCaptureFromPath("/src/test/screenshot/"+name.replaceAll("[^a-zA-Z0-9 @.,]", "")+" in "+ result.getTestContext().getAttribute("browser")+" browser.png");
     }
     @Override
     public void onTestSkipped(ITestResult result) {
