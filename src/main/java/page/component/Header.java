@@ -30,6 +30,7 @@ public class Header {
     }
 
     public void openHomePage(){
+//        actions.scrollByAmount(0,-10);
         driver.findElement(By.cssSelector(".wd-main-logo")).click();
     }
     /**

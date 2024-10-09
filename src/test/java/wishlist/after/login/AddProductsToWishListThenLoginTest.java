@@ -30,6 +30,5 @@ public class AddProductsToWishListThenLoginTest extends BaseTest {
         assertFalse(wishlistPage.isEmpty(),"Incorrect functionality(No products added to wishlist)");
         String names=wishlistPage.getAllProductsNameInTheWishlistPage();
         assertTrue((names.contains(productName1) && names.contains(productName2)),"Incorrect functionality");
-        wishlistPage.header.logout();
     }
 }

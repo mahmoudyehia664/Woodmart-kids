@@ -28,7 +28,7 @@ public class PopupAddToWishlist {
     }
 
     private void backToShop(){
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".wd-wishlist-back-to-shop"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".wd-wishlist-back-to-shop"))).click();
     }
     private void openWishlistPage(){
         driver.findElement(By.cssSelector(".wd-wishlist-back-to-lists")).click();
@@ -38,15 +38,9 @@ public class PopupAddToWishlist {
      * add product to the default wishlist(My wishlist)
      */
     public void addToWishlistThenBackToShop(){
-        driver.findElement(By.cssSelector(".wd-wishlist-save-btn")).click();
-        try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".wd-wishlist-add-success .title")));
-        } catch (Exception e) {
-            System.out.println("Product not added to the wishlist");
-            throw new RuntimeException(e);
-        }
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".wd-wishlist-save-btn"))).click();
         backToShop();
-        waitForMilliseconds(1000);
+        waitForMilliseconds(1500);
     }
     /**
      * add product to the default wishlist(My wishlist)
@@ -82,7 +76,7 @@ public class PopupAddToWishlist {
             throw new RuntimeException(e);
         }
         backToShop();
-        waitForMilliseconds(1000);
+        waitForMilliseconds(1500);
     }
     /**
      *
@@ -108,7 +102,6 @@ public class PopupAddToWishlist {
     public PopupAddToWishlist addNewWishList(String wishlistGroupName){
         driver.findElement(By.cssSelector(".wd-wishlist-add-group a")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".wd-wishlist-group-name"))).sendKeys(wishlistGroupName);
-        driver.findElement(By.cssSelector(".wd-wishlist-save-btn")).click();
         return this;
     }
 }

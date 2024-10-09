@@ -21,10 +21,13 @@
 <!--            <class name="contactus.ContactUsTest"/>-->
 <!--            <class name="about.us.AboutUsTest"/>-->
 <!--            <class name="wishlist.before.login.AddProductsToWishListBeforeLoginTest"/>-->
-<!--            <class name="wishlist.after.login.AddProductsToWishListAfterLoginTest"/>-->
-<!--            <class name="wishlist.after.login.IsProductsExistInMyWishlistAfterLogoutThenLoginTest"/>-->
-<!--            <class name="wishlist.after.login.RemoveProductFromWishlistTest"/>-->
-<!--            <class name="wishlist.after.login.AddProductsToWishListThenLoginTest"/>-->
+            <class name="wishlist.after.login.AddProductsToWishListAfterLoginTest"/>
+            <class name="wishlist.after.login.IsProductsExistInMyWishlistAfterLogoutThenLoginTest"/>
+            <class name="wishlist.after.login.RemoveProductFromWishlistTest"/>
+            <class name="wishlist.after.login.AddProductsToWishListThenLoginTest"/>
+            <class name="wishlist.after.login.AddNewWishlistGroupTest"/>
+            <class name="wishlist.after.login.EditWishlistGroupNameTest"/>
+            <class name="wishlist.after.login.RemoveWishlistGroupTest"/>
         </classes>
     </test>
 </suite>

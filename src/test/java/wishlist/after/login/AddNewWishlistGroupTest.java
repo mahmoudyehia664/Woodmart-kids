@@ -11,22 +11,23 @@ import pages.WishlistPage;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-public class RemoveProductFromWishlistTest extends BaseTest {
-
-    @Test(dependsOnGroups = {"IsProductsExistInMyWishlistAfterLogoutThenLoginTest.isProductsExistInMyWishlistAfterLogoutThenLogin"}, dataProvider = "getData",dataProviderClass = Data.class)
-    @DataProviderIndex(4)
-    public void removeProductFromWishlist(String productName1, String productName2){
+public class AddNewWishlistGroupTest extends BaseTest {
+    @Test(dataProvider = "getData",dataProviderClass = Data.class)
+    @DataProviderIndex(7)
+    public void addNewWishlistGroup(String productName1, String productName2){
         LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage) homePage.header.openMyAccountPage();
         assertTrue(loginAndRegisterPage.isFound(),"Page not found");
         assertTrue(loginAndRegisterPage.getPageURL().endsWith("my-account/"),"Incorrect page opened");
         DashboardPage dashboardPage=loginAndRegisterPage.login("iti","Jwcgdb/*8z#d+7/");
+        assertTrue(dashboardPage.isFound(),"Page not found");
         WishlistPage wishlistPage=dashboardPage.header.openWishlistPage();
+        wishlistPage.addNewWishlistGroup("ITI").header.openHomePage();
+//        wishlistPage.header.openHomePage();
+        homePage.productCart.selectProduct(productName1).addToWishlist().addNewWishList("ITI_2").addToWishlistThenBackToShop("ITI_2");
+        wishlistPage=homePage.productCart.selectProduct(productName2).addToWishlist().addToWishlistThenOpenWishlist("ITI");
         assertTrue(wishlistPage.isFound(),"Page not found");
         assertTrue(wishlistPage.getPageURL().endsWith("wishlist/"),"Incorrect page opened");
-        assertFalse(wishlistPage.isEmpty(),"No products in the wishlist");
-        wishlistPage.removeProductFromWishlist(productName1).removeProductFromWishlist(productName2);
-        String names=wishlistPage.getAllProductsNameInTheWishlistPage();
-        assertFalse((names.contains(productName1) && names.contains(productName2)),"Incorrect functionality");
+        String names=wishlistPage.getWishlistGroupsNames();
+        assertTrue((names.contains("ITI") && names.contains("ITI_2")),"Incorrect functionality");
     }
-
 }

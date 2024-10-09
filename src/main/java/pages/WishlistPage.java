@@ -24,11 +24,21 @@ public class WishlistPage extends AbstractPage{
      * @return true if the page empty , false if there is products
      */
     public boolean isEmpty(){
-        try {
-            wishlistGroup.findElement(By.cssSelector(".wd-empty-wishlist"));
-            return true;
-        } catch (Exception e) {
-            return false;
+        if (header.isUserLogin())
+        {
+            try {
+                getWait().until(ExpectedConditions.visibilityOf(wishlistGroup.findElement(By.cssSelector(".wd-empty-wishlist"))));
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }else {
+            try {
+                getWait().until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector(".wd-empty-wishlist"))));
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
         }
     }
 
@@ -48,6 +58,9 @@ public class WishlistPage extends AbstractPage{
     }
     private void selectWishlistGroup(String wishlistGroupName){
         wishlistGroup=driver.findElement(By.xpath("//h4[contains(.,'"+wishlistGroupName+"')]/ancestor::div[@class='wd-wishlist-group']"));
+        int y=wishlistGroup.getLocation().y-155;
+        getJs().executeScript("window.scrollTo(0, "+y+");");
+        waitForMilliseconds(1500);
     }
     public int numberOfWishlistGroups(){
         return driver.findElements(By.cssSelector(".wd-wishlist-group")).size();
@@ -107,7 +120,26 @@ public class WishlistPage extends AbstractPage{
         wishlistGroup.findElement(By.cssSelector(".wd-wishlist-rename-save")).click();
         return this;
     }
+    public WishlistPage editWishlistGroupName(String wishlistGroupName,String name){
+        selectWishlistGroup(wishlistGroupName);
+        getActions().moveToElement(wishlistGroup.findElement(By.cssSelector(".wd-wishlist-group-action"))).perform();
+        getWait().until(ExpectedConditions.visibilityOf(wishlistGroup.findElement(By.cssSelector(".wd-wishlist-edit-title")))).click();
+        WebElement renameInput=wishlistGroup.findElement(By.cssSelector(".wd-wishlist-input-rename"));
+        getWait().until(ExpectedConditions.visibilityOf(renameInput)).clear();
+        renameInput.sendKeys(name);
+        wishlistGroup.findElement(By.cssSelector(".wd-wishlist-rename-save")).click();
+        return this;
+    }
+    public WishlistPage removeWishlistGroup(String wishlistGroupName){
+        selectWishlistGroup(wishlistGroupName);
+        getActions().moveToElement(wishlistGroup.findElement(By.cssSelector(".wd-wishlist-group-action"))).perform();
+        getWait().until(ExpectedConditions.visibilityOf(wishlistGroup.findElement(By.cssSelector(".wd-wishlist-remove-group")))).click();
+        driver.switchTo().alert().accept();
+        waitForMilliseconds(1000);
+        return this;
+    }
     public String getWishlistGroupsNames(){
+        waitForMilliseconds(2000);
         List<WebElement> names=driver.findElements(By.cssSelector(".wd-wishlist-group-title h4"));
         List<String> text=new ArrayList<>();
         for (WebElement name:names){
@@ -144,6 +176,15 @@ public class WishlistPage extends AbstractPage{
             text.add(name.getText());
         }
         return text.toString();
+    }
+
+    public WishlistPage addNewWishlistGroup(String wishlistGroupName){
+        driver.findElement(By.cssSelector(".wd-wishlist-create-group-btn")).click();
+        getWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".wd-wishlist-group-name"))).sendKeys(wishlistGroupName);
+        driver.findElement(By.cssSelector(".wd-wishlist-save-btn")).click();
+        getActions().click().perform();
+        waitForMilliseconds(3000);
+        return this;
     }
 
 }

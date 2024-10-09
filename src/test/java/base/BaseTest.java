@@ -14,6 +14,7 @@ import pages.HomePage;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Map;
 
 
 public class BaseTest {
@@ -28,6 +29,10 @@ public class BaseTest {
                 ChromeOptions chromeOptions = new ChromeOptions();
 //                chromeOptions.addArguments("disable-infobars"); // This disables the "Chrome is being controlled by automated test software" message
                 chromeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); // This also helps in hiding the message
+                chromeOptions.setExperimentalOption("prefs", Map.of(
+                        "credentials_enable_service", false,
+                        "profile.password_manager_enabled", false
+                ));
                 driver=new ChromeDriver(chromeOptions);
                 break;
             case "Edge":
@@ -35,6 +40,10 @@ public class BaseTest {
 //                 Add arguments to hide automation control
 //                edgeOptions.addArguments("--disable-blink-features=AutomationControlled");
                 edgeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+//                edgeOptions.setCapability("prefs", Map.of(
+//                        "credentials_enable_service", false,
+//                        "profile.password_manager_enabled", false
+//                ));
                 driver=new EdgeDriver(edgeOptions);
                 break;
             case "Firefox":
@@ -46,7 +55,6 @@ public class BaseTest {
     }
     @BeforeMethod
     public void getPage(){
-        driver.get("https://test-iti-testing-project-v1.pantheonsite.io/");
         JavascriptExecutor js = (JavascriptExecutor) driver;
         // Clear local storage
         js.executeScript("window.localStorage.clear();");
@@ -54,6 +62,8 @@ public class BaseTest {
         js.executeScript("window.sessionStorage.clear();");
         // Clear cache
         driver.manage().deleteAllCookies();
+        driver.get("https://test-iti-testing-project-v1.pantheonsite.io/");
+        homePage.header.logout();
     }
 
     @AfterMethod

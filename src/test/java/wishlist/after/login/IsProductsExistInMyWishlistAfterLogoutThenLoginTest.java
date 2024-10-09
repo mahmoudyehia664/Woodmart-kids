@@ -32,6 +32,5 @@ public class IsProductsExistInMyWishlistAfterLogoutThenLoginTest extends BaseTes
         assertFalse(wishlistPage.isEmpty(),"Incorrect functionality(No products in the wishlist)");
         String names=wishlistPage.getAllProductsNameInTheWishlistPage();
         assertTrue((names.contains(productName1) && names.contains(productName2)),"Incorrect functionality");
-        wishlistPage.header.logout();
     }
 }

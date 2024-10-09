@@ -12,9 +12,9 @@ import java.time.Duration;
 
 public abstract class AbstractPage {
     protected WebDriver driver;
-    protected WebDriverWait wait;
-    protected JavascriptExecutor js;
-    protected Actions actions;
+    private WebDriverWait wait;
+    private JavascriptExecutor js;
+    private Actions actions;
     public Header header;
 
     public AbstractPage(WebDriver _driver){
