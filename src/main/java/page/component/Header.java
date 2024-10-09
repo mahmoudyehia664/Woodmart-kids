@@ -18,7 +18,8 @@ public class Header {
     private WebDriverWait wait;
     private Actions actions;
     private final By loginText=By.cssSelector("[title='My account'] .wd-tools-text");
-    private final By wishlist=By.cssSelector("[title='Wishlist products'] .wd-tools-count");
+    private final By wishlist=By.cssSelector("[title='Wishlist products']");
+    private final By wishlistCount=By.cssSelector("[title='Wishlist products'] .wd-tools-count");
     private final By compare=By.cssSelector("[title='Compare products'] .wd-tools-count");
     private final By cartProduct =By.cssSelector("[title='Shopping cart']");
     private final By cartProductCount =By.cssSelector("[title='Shopping cart'] .wd-cart-number");
@@ -153,7 +154,7 @@ public class Header {
         return new WishlistPage(driver);
     }
     public String getWishlistContentNumberFromHeader(){
-        return driver.findElement(wishlist).getText();
+        return driver.findElement(wishlistCount).getText();
     }
 
     public CompareProductsPage openCompareProductsPage(){

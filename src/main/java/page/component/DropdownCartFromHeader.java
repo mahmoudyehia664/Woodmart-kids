@@ -131,7 +131,7 @@ public class DropdownCartFromHeader {
     /**
      *
      * @param index starts from 1
-     * @return HashMap<String, String> contain title and price and quantity for a selected product
+     * @return HashMap<String, String> contain product data [Name,Price,Quantity]
      */
     public HashMap<String, String> getProductDataFromMiniCart(int index){
         if (!checkIndex(index)){
@@ -140,25 +140,20 @@ public class DropdownCartFromHeader {
         }
         WebElement singleProduct=baseElement.findElement(By.xpath("(//li[contains(@class,'mini_cart_item')])["+index+"]"));
         HashMap<String, String> productData = new HashMap<>();
-        productData.put("name",getProductName(singleProduct));
-        productData.put("price",getProductPrice(singleProduct));
-        productData.put("quantity",getProductQuantity(singleProduct));
+        productData.put("Name",getProductName(singleProduct));
+        productData.put("Price",getProductPrice(singleProduct));
+        productData.put("Quantity",getProductQuantity(singleProduct));
         return productData;
     }
 
     /**
      *
-     * @return List<HashMap<String, String>> contain title and price and quantity for each product
+     * @return List<HashMap<String, String>> contain [Name,Price,Quantity] for each product
      */
     public List<HashMap<String, String>> getProductsDataFromMiniCart(){
-        List<WebElement> products=baseElement.findElements(allProductsLocator);
         List<HashMap<String, String>> productsDetails = new ArrayList<>();
-        for (WebElement product:products){
-            HashMap<String, String> productData = new HashMap<>();
-            productData.put("name", getProductName(product));
-            productData.put("price", getProductPrice(product));
-            productData.put("quantity", getProductQuantity(product));
-            productsDetails.add(productData);
+        for (int i=0;i<getNumberOfProductsInTheCart();i++){
+            productsDetails.add(getProductDataFromMiniCart(i));
         }
         return productsDetails;
     }

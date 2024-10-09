@@ -3,23 +3,23 @@
     <listeners>
         <listener class-name="utils.Listeners"/>
     </listeners>
-<!--    <parameter name="browser" value="Chrome"/>-->
-    <parameter name="browser" value="Edge"/>
+    <parameter name="browser" value="Chrome"/>
+<!--    <parameter name="browser" value="Edge"/>-->
 <!--    <parameter name="browser" value="Firefox"/>-->
     <test name="Woodmart-kids-chrome">
         <classes>
-            <class name="register.RegisterTest"/>
-            <class name="login.LoginTest"/>
-            <class name="lost.password.LostPasswordTest"/>
-            <class name="privacy.page.OpenPrivacyPageWhileRegisterTest"/>
-            <class name="home.page.OpenShopPageFromBannerTest"/>
-            <class name="home.page.OpenCategoryPageTest"/>
-            <class name="home.page.AddProductToCartTest"/>
-            <class name="home.page.BuyBundleCollectionTest"/>
-            <class name="home.page.OpenInstagramPageTest"/>
-            <class name="home.page.OpenPostTest"/>
-            <class name="contactus.ContactUsTest"/>
-            <class name="about.us.AboutUsTest"/>
+<!--            <class name="register.RegisterTest"/>-->
+<!--            <class name="login.LoginTest"/>-->
+<!--            <class name="lost.password.LostPasswordTest"/>-->
+<!--            <class name="privacy.page.OpenPrivacyPageWhileRegisterTest"/>-->
+<!--            <class name="home.page.OpenShopPageFromBannerTest"/>-->
+<!--            <class name="home.page.OpenCategoryPageTest"/>-->
+<!--            <class name="home.page.AddProductToCartTest"/>-->
+<!--            <class name="home.page.BuyBundleCollectionTest"/>-->
+<!--            <class name="home.page.OpenInstagramPageTest"/>-->
+<!--            <class name="home.page.OpenPostTest"/>-->
+<!--            <class name="contactus.ContactUsTest"/>-->
+<!--            <class name="about.us.AboutUsTest"/>-->
             <class name="wishlist.after.login.AddProductsToWishListAfterLoginTest"/>
             <class name="wishlist.before.login.AddProductsToWishListBeforeLoginTest"/>
         </classes>

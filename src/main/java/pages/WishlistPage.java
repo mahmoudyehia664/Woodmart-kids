@@ -2,10 +2,18 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import page.component.ProductCart;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WishlistPage extends AbstractPage{
+    WebElement wishlistGroup;
     public WishlistPage(WebDriver driver){
         super(driver);
+        wishlistGroup=driver.findElement(By.cssSelector(".wd-wishlist-group"));
     }
 
     /**
@@ -20,4 +28,73 @@ public class WishlistPage extends AbstractPage{
             return false;
         }
     }
+    private void selectWishlistGroup(String wishlistGroupName){
+        wishlistGroup=driver.findElement(By.xpath("//h4[contains(.,'"+wishlistGroupName+"')]/ancestor::div[@class='wd-wishlist-group']"));
+    }
+    public int numberOfWishlistGroups(){
+        return driver.findElements(By.cssSelector(".wd-wishlist-group")).size();
+    }
+    public int getNumberOfProductsInAWishlistGroup(String wishlistGroupName){
+        selectWishlistGroup(wishlistGroupName);
+        return wishlistGroup.findElements(By.cssSelector(".wd-product")).size();
+    }
+
+    /**
+     *
+     * @param wishlistGroupName wanted wishlist group
+     * @param productName the wanted product
+     * @return
+     */
+    public ProductCart dealWithProduct(String wishlistGroupName,String productName){
+        selectWishlistGroup(wishlistGroupName);
+        WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class, 'type-product')]"));
+        return new ProductCart(driver,productCart);
+    }
+
+    /**
+     *
+     * @param productName the wanted product from the default wishlist group(My wishlist - if not changed)
+     * @return
+     */
+    public ProductCart dealWithProduct(String productName){
+        WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class, 'type-product')]"));
+        return new ProductCart(driver,productCart);
+    }
+
+    /**
+     *
+     * @param productName the name of product to remove from the default wishlist group(My wishlist - if not changed)
+     * @return
+     */
+    public WishlistPage removeProductFromWishlist(String productName){
+        WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class, 'type-product')]"));
+        productCart.findElement(By.cssSelector(".wd-wishlist-remove")).click();
+        return this;
+    }
+
+    public WishlistPage removeProductFromWishlist(String wishlistGroupName,String productName){
+        selectWishlistGroup(wishlistGroupName);
+        WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class, 'type-product')]"));
+        productCart.findElement(By.cssSelector(".wd-wishlist-remove")).click();
+        return this;
+    }
+
+    public WishlistPage editWishlistGroupName(String name){
+        getActions().moveToElement(wishlistGroup.findElement(By.cssSelector(".wd-wishlist-group-action"))).perform();
+        getWait().until(ExpectedConditions.visibilityOf(wishlistGroup.findElement(By.cssSelector(".wd-wishlist-edit-title")))).click();
+        WebElement renameInput=wishlistGroup.findElement(By.cssSelector(".wd-wishlist-input-rename"));
+        getWait().until(ExpectedConditions.visibilityOf(renameInput)).clear();
+        renameInput.sendKeys(name);
+        wishlistGroup.findElement(By.cssSelector(".wd-wishlist-rename-save")).click();
+        return this;
+    }
+    public String getWishlistGroupsNames(){
+        List<WebElement> names=driver.findElements(By.cssSelector(".wd-wishlist-group-title h4"));
+        List<String> text=new ArrayList<>();
+        for (WebElement name:names){
+            text.add(name.getText());
+        }
+        return text.toString();
+    }
+
 }

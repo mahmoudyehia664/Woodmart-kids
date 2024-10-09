@@ -13,6 +13,8 @@ import pages.ProductPage;
 import pages.WishlistPage;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class ProductCart {
     private final WebDriver driver;
@@ -23,6 +25,10 @@ public class ProductCart {
     WebElement addToCompareButton;
     public ProductCart(WebDriver _driver){
         driver=_driver;
+    }
+    public ProductCart(WebDriver _driver,WebElement _productCart){
+        driver=_driver;
+        productCart=_productCart;
     }
 
     private void waitForMilliseconds(long milliseconds) {
@@ -131,21 +137,20 @@ public class ProductCart {
     }
 
 
-    public void addToWishlist(){
+    public PopupAddToWishlist addToWishlist(){
         addToWishlistButton=productCart.findElement(By.cssSelector(".wd-wishlist-btn a"));
         actions=new Actions(driver);
         actions.moveToElement(addToWishlistButton).perform();
         if(productCart.findElement(By.cssSelector(".wd-wishlist-btn span")).getText().equals("Add to wishlist")){
             addToWishlistButton.click();
             if (isUserLogin()){
-                driver.findElement(By.cssSelector(".wd-wishlist-save-btn")).click();
-                wait=new WebDriverWait(driver,Duration.ofSeconds(10));
-                wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".wd-wishlist-back-to-shop"))).click();
+                return new PopupAddToWishlist(driver);
             }
             waitForMilliseconds(1000);
         }else {
             System.out.println("The product already in the wishlist");
         }
+        return null;
     }
     public WishlistPage addToWishlistThenOpenWishListPage(){
         addToWishlist();
@@ -171,9 +176,6 @@ public class ProductCart {
     public String getProductName(){
         return productCart.findElement(By.cssSelector(".wd-entities-title a")).getText();
     }
-    public String getProductCategory(){
-        return productCart.findElement(By.cssSelector(".wd-product-cats")).getText();
-    }
     public String getProductBrand(){
         return productCart.findElement(By.cssSelector(".wd-product-brands-links a")).getText();
     }
@@ -182,5 +184,26 @@ public class ProductCart {
     }
     public String getProductURL(){
         return productCart.findElement(By.cssSelector(".wd-entities-title a")).getAttribute("href");
+    }
+    public String getProductId(){
+        return productCart.getAttribute("data-id");
+    }
+    public String getProductCategories(){
+        return productCart.findElement(By.cssSelector(".wd-product-cats")).getText().replace(", ","|");
+    }
+
+    /**
+     *
+     * @return HashMap<String,String> contain product data [Name,URL,Price,Brand,Categories,ID]
+     */
+    public HashMap<String,String> getAllProductDetails(){
+        HashMap<String,String> productDetails=new HashMap<>();
+        productDetails.put("Name",getProductName());
+        productDetails.put("URL",getProductURL());
+        productDetails.put("Price",getProductPrice());
+        productDetails.put("Brand",getProductBrand());
+        productDetails.put("Categories",getProductCategories());
+        productDetails.put("ID",getProductId());
+        return productDetails;
     }
 }

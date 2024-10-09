@@ -22,8 +22,8 @@ public class AddProductsToWishListAfterLoginTest extends BaseTest {
         DashboardPage dashboardPage=loginAndRegisterPage.login("iti","Jwcgdb/*8z#d+7/");
         assertTrue(dashboardPage.isFound(),"Page not found");
         dashboardPage.header.openHomePage();
-        homePage.productCart.selectProduct(productName1).addToWishlist();
-        homePage.productCart.selectProduct(productName2).addToWishlist();
+        homePage.productCart.selectProduct(productName1).addToWishlist().addToWishlistThenBackToShop();
+        homePage.productCart.selectProduct(productName2).addToWishlist().addToWishlistThenBackToShop();
         WishlistPage wishlistPage=homePage.header.openWishlistPage();
         assertTrue(wishlistPage.isFound(),"Page not found");
         assertTrue(wishlistPage.getPageURL().endsWith("wishlist/"),"Incorrect page opened");
