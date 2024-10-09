@@ -100,6 +100,14 @@ public class Header {
         }
         return driver.findElement(loginText).getText().endsWith(userName);
     }
+
+    /**
+     *
+     * @return true --> user logged in , false --> user not logged in
+     */
+    public boolean isUserLogin(){
+        return !driver.findElement(loginText).getText().equals("Login / Register");
+    }
     public Object openMyAccountPage(){
         if (driver.findElement(loginText).getText().equals("Login / Register")){
             driver.findElement(loginText).click();

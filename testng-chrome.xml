@@ -3,9 +3,9 @@
     <listeners>
         <listener class-name="utils.Listeners"/>
     </listeners>
-    <parameter name="browser" value="Chrome"/>
+<!--    <parameter name="browser" value="Chrome"/>-->
 <!--    <parameter name="browser" value="Edge"/>-->
-<!--    <parameter name="browser" value="Firefox"/>-->
+    <parameter name="browser" value="Firefox"/>
     <test name="Woodmart-kids-chrome">
         <classes>
 <!--            <class name="register.RegisterTest"/>-->
@@ -20,8 +20,11 @@
 <!--            <class name="home.page.OpenPostTest"/>-->
 <!--            <class name="contactus.ContactUsTest"/>-->
 <!--            <class name="about.us.AboutUsTest"/>-->
-            <class name="wishlist.after.login.AddProductsToWishListAfterLoginTest"/>
-            <class name="wishlist.before.login.AddProductsToWishListBeforeLoginTest"/>
+<!--            <class name="wishlist.before.login.AddProductsToWishListBeforeLoginTest"/>-->
+<!--            <class name="wishlist.after.login.AddProductsToWishListAfterLoginTest"/>-->
+<!--            <class name="wishlist.after.login.IsProductsExistInMyWishlistAfterLogoutThenLoginTest"/>-->
+<!--            <class name="wishlist.after.login.RemoveProductFromWishlistTest"/>-->
+<!--            <class name="wishlist.after.login.AddProductsToWishListThenLoginTest"/>-->
         </classes>
     </test>
 </suite>

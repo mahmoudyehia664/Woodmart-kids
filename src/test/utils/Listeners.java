@@ -3,12 +3,10 @@ package utils;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
-import com.google.common.io.Files;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import java.io.File;
 import java.util.Arrays;
 
 import static utils.ExtentReport.configExtentReport;
@@ -45,7 +43,7 @@ public class Listeners implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         saveTestObject.get().fail(result.getThrowable());
-        saveTestObject.get().addScreenCaptureFromPath("/src/test/screenshot/"+name.replaceAll("[^a-zA-Z0-9 @.,]", "")+" in "+ result.getTestContext().getAttribute("browser")+" browser.png");
+        saveTestObject.get().addScreenCaptureFromPath("/src/test/screenshot/"+name.replaceAll("[^a-zA-Z0-9 @.,\\[\\]]", "")+" in "+ result.getTestContext().getAttribute("browser")+" browser.png");
     }
     @Override
     public void onTestSkipped(ITestResult result) {

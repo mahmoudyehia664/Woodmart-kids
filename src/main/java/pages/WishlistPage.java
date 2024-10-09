@@ -13,7 +13,10 @@ public class WishlistPage extends AbstractPage{
     WebElement wishlistGroup;
     public WishlistPage(WebDriver driver){
         super(driver);
-        wishlistGroup=driver.findElement(By.cssSelector(".wd-wishlist-group"));
+        if (header.isUserLogin())
+        {
+            wishlistGroup=driver.findElement(By.cssSelector(".wd-wishlist-group"));
+        }
     }
 
     /**
@@ -22,7 +25,22 @@ public class WishlistPage extends AbstractPage{
      */
     public boolean isEmpty(){
         try {
-            driver.findElement(By.cssSelector(".wd-empty-wishlist"));
+            wishlistGroup.findElement(By.cssSelector(".wd-empty-wishlist"));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @param wishlistGroupName the name of the wishlist group
+     * @return
+     */
+    public boolean isEmpty(String wishlistGroupName){
+        selectWishlistGroup(wishlistGroupName);
+        try {
+            wishlistGroup.findElement(By.cssSelector(".wd-empty-wishlist"));
             return true;
         } catch (Exception e) {
             return false;
@@ -69,6 +87,7 @@ public class WishlistPage extends AbstractPage{
     public WishlistPage removeProductFromWishlist(String productName){
         WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class, 'type-product')]"));
         productCart.findElement(By.cssSelector(".wd-wishlist-remove")).click();
+        waitForMilliseconds(1000);
         return this;
     }
 
@@ -90,6 +109,36 @@ public class WishlistPage extends AbstractPage{
     }
     public String getWishlistGroupsNames(){
         List<WebElement> names=driver.findElements(By.cssSelector(".wd-wishlist-group-title h4"));
+        List<String> text=new ArrayList<>();
+        for (WebElement name:names){
+            text.add(name.getText());
+        }
+        return text.toString();
+    }
+    public String getAllProductsNameInTheWishlistPage(){
+        List<WebElement> names=driver.findElements(By.cssSelector(".product .wd-entities-title"));
+        List<String> text=new ArrayList<>();
+        for (WebElement name:names){
+            text.add(name.getText());
+        }
+        return text.toString();
+    }
+
+    /**
+     *
+     * @return string contain all products names from the default wishlist group
+     */
+    public String getAllProductsNameInAWishlistGroup(){
+        List<WebElement> names=wishlistGroup.findElements(By.cssSelector(".product .wd-entities-title"));
+        List<String> text=new ArrayList<>();
+        for (WebElement name:names){
+            text.add(name.getText());
+        }
+        return text.toString();
+    }
+    public String getAllProductsNameInAWishlistGroup(String wishlistGroupName){
+        selectWishlistGroup(wishlistGroupName);
+        List<WebElement> names=wishlistGroup.findElements(By.cssSelector(".product .wd-entities-title"));
         List<String> text=new ArrayList<>();
         for (WebElement name:names){
             text.add(name.getText());

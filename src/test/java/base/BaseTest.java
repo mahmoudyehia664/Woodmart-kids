@@ -65,7 +65,7 @@ public class BaseTest {
                 Object[] params = result.getParameters();
                 String parameters = (params.length == 0) ? "" : Arrays.toString(params);
                 String name=result.getMethod().getMethodName()+parameters;
-                Files.move(screenShot,new File("src/test/screenshot/"+name.replaceAll("[^a-zA-Z0-9 @.,]", "")+" in "+ result.getTestContext().getAttribute("browser")+" browser.png"));
+                Files.move(screenShot,new File("src/test/screenshot/"+name.replaceAll("[^a-zA-Z0-9 @.,\\[\\]]", "")+" in "+ result.getTestContext().getAttribute("browser")+" browser.png"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
