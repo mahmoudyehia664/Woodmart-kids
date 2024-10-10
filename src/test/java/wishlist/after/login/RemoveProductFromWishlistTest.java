@@ -13,7 +13,7 @@ import static org.testng.Assert.assertTrue;
 
 public class RemoveProductFromWishlistTest extends BaseTest {
 
-    @Test(dependsOnGroups = {"IsProductsExistInMyWishlistAfterLogoutThenLoginTest.isProductsExistInMyWishlistAfterLogoutThenLogin"}, dataProvider = "getData",dataProviderClass = Data.class)
+    @Test(priority = 3, dataProvider = "getData",dataProviderClass = Data.class)
     @DataProviderIndex(4)
     public void removeProductFromWishlist(String productName1, String productName2){
         LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage) homePage.header.openMyAccountPage();

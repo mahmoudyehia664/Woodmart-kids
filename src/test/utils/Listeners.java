@@ -22,7 +22,7 @@ public class Listeners implements ITestListener {
 
     @Override
     public void onStart(ITestContext context) {
-        report=configExtentReport((String)context.getAttribute("browser"));
+        report=configExtentReport(context.getCurrentXmlTest().getParameter("browser"));
     }
     @Override
     public boolean isEnabled() {
@@ -43,7 +43,7 @@ public class Listeners implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         saveTestObject.get().fail(result.getThrowable());
-        saveTestObject.get().addScreenCaptureFromPath("/src/test/screenshot/"+name.replaceAll("[^a-zA-Z0-9 @.,\\[\\]]", "")+" in "+ result.getTestContext().getAttribute("browser")+" browser.png");
+        saveTestObject.get().addScreenCaptureFromPath("/src/test/screenshot/"+name.replaceAll("[^a-zA-Z0-9 @.,\\[\\]]", "")+" in "+ result.getTestContext().getCurrentXmlTest().getParameter("browser")+" browser.png");
     }
     @Override
     public void onTestSkipped(ITestResult result) {

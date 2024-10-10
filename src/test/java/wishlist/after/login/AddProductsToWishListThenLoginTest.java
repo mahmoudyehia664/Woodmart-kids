@@ -13,7 +13,7 @@ import static org.testng.Assert.assertTrue;
 
 public class AddProductsToWishListThenLoginTest extends BaseTest {
 
-    @Test(dataProvider = "getData",dataProviderClass = Data.class)
+    @Test(priority = 4,dataProvider = "getData",dataProviderClass = Data.class)
     @DataProviderIndex(4)
     public void addProductsToWishListThenLogin(String productName1, String productName2){
         homePage.productCart.selectProduct(productName1).addToWishlist();

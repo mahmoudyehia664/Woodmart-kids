@@ -12,7 +12,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class IsProductsExistInMyWishlistAfterLogoutThenLoginTest extends BaseTest {
-    @Test(groups = {"IsProductsExistInMyWishlistAfterLogoutThenLoginTest.isProductsExistInMyWishlistAfterLogoutThenLogin"},dependsOnGroups = {"AddProductsToWishListAfterLoginTest.addProductsToWishListAfterLogin"},dataProvider = "getData",dataProviderClass = Data.class)
+    @Test(priority = 2,dataProvider = "getData",dataProviderClass = Data.class)
     @DataProviderIndex(4)
     public void isProductsExistInMyWishlistAfterLogoutThenLogin(String productName1, String productName2){
         LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage) homePage.header.openMyAccountPage();

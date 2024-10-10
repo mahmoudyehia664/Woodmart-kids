@@ -12,7 +12,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class EditWishlistGroupNameTest extends BaseTest {
-    @Test
+    @Test(priority = 6)
     public void editWishlistGroupName(){
         LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage) homePage.header.openMyAccountPage();
         assertTrue(loginAndRegisterPage.isFound(),"Page not found");

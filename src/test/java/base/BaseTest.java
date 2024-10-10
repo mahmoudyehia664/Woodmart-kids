@@ -23,11 +23,10 @@ public class BaseTest {
     @BeforeSuite
     @Parameters({"browser"})
     public static void test(String browser, ITestContext context){
-        context.setAttribute("browser", browser);
+//        context.setAttribute("browser", browser);
         switch (browser){
             case "Chrome":
                 ChromeOptions chromeOptions = new ChromeOptions();
-//                chromeOptions.addArguments("disable-infobars"); // This disables the "Chrome is being controlled by automated test software" message
                 chromeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); // This also helps in hiding the message
                 chromeOptions.setExperimentalOption("prefs", Map.of(
                         "credentials_enable_service", false,
@@ -37,13 +36,7 @@ public class BaseTest {
                 break;
             case "Edge":
                 EdgeOptions edgeOptions = new EdgeOptions();
-//                 Add arguments to hide automation control
-//                edgeOptions.addArguments("--disable-blink-features=AutomationControlled");
                 edgeOptions.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-//                edgeOptions.setCapability("prefs", Map.of(
-//                        "credentials_enable_service", false,
-//                        "profile.password_manager_enabled", false
-//                ));
                 driver=new EdgeDriver(edgeOptions);
                 break;
             case "Firefox":
@@ -75,13 +68,13 @@ public class BaseTest {
                 Object[] params = result.getParameters();
                 String parameters = (params.length == 0) ? "" : Arrays.toString(params);
                 String name=result.getMethod().getMethodName()+parameters;
-                Files.move(screenShot,new File("src/test/screenshot/"+name.replaceAll("[^a-zA-Z0-9 @.,\\[\\]]", "")+" in "+ result.getTestContext().getAttribute("browser")+" browser.png"));
+                Files.move(screenShot,new File("src/test/screenshot/"+name.replaceAll("[^a-zA-Z0-9 @.,\\[\\]]", "")+" in "+ result.getTestContext().getCurrentXmlTest().getParameter("browser")+" browser.png"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
-    @AfterTest
+    @AfterSuite
     public void tearDown(){
         driver.quit();
     }

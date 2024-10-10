@@ -12,7 +12,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class AddNewWishlistGroupTest extends BaseTest {
-    @Test(dataProvider = "getData",dataProviderClass = Data.class)
+    @Test(priority = 5,dataProvider = "getData",dataProviderClass = Data.class)
     @DataProviderIndex(7)
     public void addNewWishlistGroup(String productName1, String productName2){
         LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage) homePage.header.openMyAccountPage();

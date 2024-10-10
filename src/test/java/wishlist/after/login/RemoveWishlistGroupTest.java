@@ -10,7 +10,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class RemoveWishlistGroupTest extends BaseTest {
-    @Test
+    @Test(priority = 7)
     public void removeWishlistGroupTest(/*String wishlistGroupName*/){
         LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage) homePage.header.openMyAccountPage();
         assertTrue(loginAndRegisterPage.isFound(),"Page not found");
