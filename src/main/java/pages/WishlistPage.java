@@ -13,6 +13,7 @@ public class WishlistPage extends AbstractPage{
     WebElement wishlistGroup;
     public WishlistPage(WebDriver driver){
         super(driver);
+//        productCart=new ProductCart(driver);
         if (header.isUserLogin())
         {
             wishlistGroup=driver.findElement(By.cssSelector(".wd-wishlist-group"));
@@ -78,7 +79,7 @@ public class WishlistPage extends AbstractPage{
      */
     public ProductCart dealWithProduct(String wishlistGroupName,String productName){
         selectWishlistGroup(wishlistGroupName);
-        WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class, 'type-product')]"));
+        WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class,'type-product')]"));
         return new ProductCart(driver,productCart);
     }
 
@@ -88,7 +89,7 @@ public class WishlistPage extends AbstractPage{
      * @return
      */
     public ProductCart dealWithProduct(String productName){
-        WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class, 'type-product')]"));
+        WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class,'type-product')]"));
         return new ProductCart(driver,productCart);
     }
 

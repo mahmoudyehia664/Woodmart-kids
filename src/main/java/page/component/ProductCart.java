@@ -14,7 +14,6 @@ import pages.WishlistPage;
 
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class ProductCart {
     private final WebDriver driver;
@@ -29,6 +28,8 @@ public class ProductCart {
     public ProductCart(WebDriver _driver,WebElement _productCart){
         driver=_driver;
         productCart=_productCart;
+        actions=new Actions(driver);
+        actions.scrollByAmount(0,-5).moveToElement(_productCart).build().perform();
     }
 
     private void waitForMilliseconds(long milliseconds) {

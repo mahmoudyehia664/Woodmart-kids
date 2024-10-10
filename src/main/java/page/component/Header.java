@@ -199,4 +199,12 @@ public class Header {
         Select currency=new Select(driver.findElement(By.cssSelector("[name='currency']")));
         currency.selectByIndex(index);
     }
+
+    /**
+     *
+     * @return name of the current currency
+     */
+    public String getCurrentCurrency(){
+        return new Select(driver.findElement(By.cssSelector("[name='currency']"))).getFirstSelectedOption().getAttribute("value");
+    }
 }

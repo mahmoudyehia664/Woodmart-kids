@@ -64,6 +64,7 @@ public class BaseTest {
         if (ITestResult.FAILURE == result.getStatus()){
             var camera=(TakesScreenshot)driver;
             File screenShot=camera.getScreenshotAs(OutputType.FILE);
+//            File screenShot=((FirefoxDriver)driver).getFullPageScreenshotAs(OutputType.FILE);
             try {
                 Object[] params = result.getParameters();
                 String parameters = (params.length == 0) ? "" : Arrays.toString(params);
