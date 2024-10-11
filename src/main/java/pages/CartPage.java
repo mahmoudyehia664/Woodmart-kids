@@ -13,20 +13,21 @@ import java.util.List;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 public class CartPage extends AbstractPage{
-    WebElement baseElement;
+//    WebElement baseElement;
     WebElement product=null;
-    By baseElementLocator=By.cssSelector(".cart tbody");
-    By openCheckoutPage=By.cssSelector(".checkout-button");
-    By allProductsLocator=By.cssSelector(".woocommerce-cart-form__cart-item");
-    By totalPrice=By.cssSelector(".order-total bdi");
-    By name =By.cssSelector(".product-name");
-    By quantity=By.cssSelector(".qty");
-    By price=By.tagName("bdi");
-    By subTotalPrice=By.cssSelector(".product-subtotal bdi");
+//    By baseElementLocator=By.cssSelector(".cart tbody");
+    By openCheckoutPage=By.cssSelector(".cart tbody .checkout-button");
+    By allProductsLocator=By.cssSelector(".cart tbody .cart_item");
+    By totalPrice=By.cssSelector(".cart tbody .order-total bdi");
+    By name =By.cssSelector(".cart tbody .product-name");
+    By quantity=By.cssSelector(".cart tbody .qty");
+    By price=By.cssSelector(".cart tbody bdi");
+    By subTotalPrice=By.cssSelector(".cart tbody .product-subtotal bdi");
+    By remove=By.cssSelector(".product-remove .remove");
 
     public CartPage(WebDriver driver){
         super(driver);
-        baseElement=driver.findElement(baseElementLocator);
+//        baseElement=driver.findElement(baseElementLocator);
     }
     public boolean isQuantityChanged(){
         try {
@@ -51,21 +52,25 @@ public class CartPage extends AbstractPage{
             System.out.println("Wrong index");
             return null;
         }
-        product=baseElement.findElement(By.xpath("(//tr[contains(@class,'cart_item')])["+index+"]"));
+        product=driver.findElement(By.xpath("(//tr[contains(@class,'cart_item')])["+index+"]"));
         return this;
     }
     /************/
 
     public CartPage setQuantity(int quantity){
         new QuantityController(driver,product).setQuantity(quantity);
+//        isQuantityChanged();
+        waitForMilliseconds(2000);
         return this;
     }
     public CartPage plusQuantity(){
         new QuantityController(driver,product).plusQuantity();
+        waitForMilliseconds(2000);
         return this;
     }
     public CartPage minusQuantity(){
         new QuantityController(driver,product).minusQuantity();
+        waitForMilliseconds(2000);
         return this;
     }
     /***********/
@@ -73,14 +78,15 @@ public class CartPage extends AbstractPage{
         if(!checkIndex(index)){
             System.out.println("Wrong index");
         }else {
-            WebElement product=baseElement.findElement(By.xpath("(//tr[contains(@class,'cart_item')])["+index+"]"));
+            WebElement product=driver.findElement(By.xpath("(//tr[contains(@class,'cart_item')])["+index+"]"));
             product.findElement(By.className("remove")).click();
         }
     }
     public int getNumberOfProductsInTheCart(){
         try {
-            return baseElement.findElements(allProductsLocator).size();
+            return driver.findElements(allProductsLocator).size();
         } catch (Exception e) {
+            e.printStackTrace();
             return 0;
         }
     }
@@ -95,7 +101,7 @@ public class CartPage extends AbstractPage{
         }
     }
     private boolean checkIndex(int index){
-        return index<=getNumberOfProductsInTheCart() && index>0;
+        return (index<=getNumberOfProductsInTheCart() && index>0);
     }
 
     /**
@@ -117,12 +123,16 @@ public class CartPage extends AbstractPage{
      * @param index starts from 1
      * @return product price
      */
-    public String getProductPrice(int index){
+    public double getProductPrice(int index){
         if (checkIndex(index)){
             WebElement singleProduct=driver.findElement(By.xpath("(//tr[contains(@class,'cart_item')])["+index+"]"));
-            return singleProduct.findElement(price).getText();
+            if(header.getCurrentCurrency().equals("USD")){
+                return Double.parseDouble(singleProduct.findElement(price).getText().replaceAll("[,$]", ""));
+            }else {
+                return Double.parseDouble(singleProduct.findElement(price).getText().replaceAll("[.€EGP]", "").replace(",", "."));
+            }
         }else {
-            return "Wrong index";
+            return 0.0;
         }
     }
     /**
@@ -130,12 +140,16 @@ public class CartPage extends AbstractPage{
      * @param index starts from 1
      * @return product total price
      */
-    public String getProductSubTotalPrice(int index){
+    public double getProductSubTotalPrice(int index){
         if (checkIndex(index)){
             WebElement singleProduct=driver.findElement(By.xpath("(//tr[contains(@class,'cart_item')])["+index+"]"));
-            return singleProduct.findElement(subTotalPrice).getText();
+            if(header.getCurrentCurrency().equals("USD")){
+                return Double.parseDouble(singleProduct.findElement(subTotalPrice).getText().replaceAll("[,$]", ""));
+            }else {
+                return Double.parseDouble(singleProduct.findElement(subTotalPrice).getText().replaceAll("[.€EGP]", "").replace(",", "."));
+            }
         }else {
-            return "Wrong index";
+            return 0.0;
         }
     }
 
@@ -144,12 +158,12 @@ public class CartPage extends AbstractPage{
      * @param index starts from 1
      * @return product quantity
      */
-    public String getProductQuantity(int index){
+    public int getProductQuantity(int index){
         if (checkIndex(index)){
             WebElement singleProduct=driver.findElement(By.xpath("(//tr[contains(@class,'cart_item')])["+index+"]"));
-            return singleProduct.findElement(quantity).getAttribute("value");
+            return Integer.parseInt(singleProduct.findElement(quantity).getAttribute("value"));
         }else {
-            return "Wrong index";
+            return -1;
         }
     }
 
@@ -196,7 +210,7 @@ public class CartPage extends AbstractPage{
         return productsDetails;
     }
     public String getProductsNamesFromCart(){
-        List<WebElement> elements=baseElement.findElements(By.cssSelector(".cart_item"));
+        List<WebElement> elements=driver.findElements(By.cssSelector(".cart_item"));
         List<String> names=new ArrayList<>();
         for (WebElement element:elements){
             names.add(getProductName(element));
@@ -204,7 +218,7 @@ public class CartPage extends AbstractPage{
         return names.toString();
     }
     public double[] getProductsPriceFromCart(){
-        List<WebElement> elements=baseElement.findElements(By.cssSelector(".cart_item"));
+        List<WebElement> elements=driver.findElements(By.cssSelector(".cart_item"));
         double[] prices=new double[elements.size()];
 //        List<String> prices=new ArrayList<>();
         int i=0;
@@ -219,11 +233,31 @@ public class CartPage extends AbstractPage{
         return prices;
     }
     public CartPage applyCoupon(String coupon){
-        baseElement.findElement(By.id("coupon_code")).sendKeys(coupon);
-        baseElement.findElement(with(By.tagName("button")).toLeftOf(By.id("coupon_code"))).click();
+        driver.findElement(By.id("coupon_code")).sendKeys(coupon);
+        driver.findElement(with(By.tagName("button")).toLeftOf(By.id("coupon_code"))).click();
 //        baseElement.findElement(By.name("apply_coupon")).click();
         return this;
     }
+    public CartPage removeProduct(int index){
+        if (!checkIndex(index)){
+            System.out.println("Wrong index");
+            return null;
+        }
+        WebElement singleProduct=driver.findElement(By.xpath("(//tr[contains(@class,'cart_item')])["+index+"]"));
+        singleProduct.findElement(remove).click();
+        return this;
+    }
+    public CartPage undoRemoveProduct(){
+       try {
+           getWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".restore-item"))).click();
+           waitForMilliseconds(1500);
+       } catch (Exception e) {
+           System.out.println("No product removed to undo the remove action");
+           e.printStackTrace();
+       }
+       return this;
+    }
+
 
 
 
