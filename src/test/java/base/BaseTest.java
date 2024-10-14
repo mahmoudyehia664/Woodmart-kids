@@ -45,17 +45,16 @@ public class BaseTest {
         }
         driver.manage().window().maximize();
         homePage=new HomePage(driver,"https://test-iti-testing-project-v1.pantheonsite.io/");
+//        homePage=new HomePage(driver,"https://live-iti-testing-project-v1.pantheonsite.io/");
     }
     @BeforeMethod
     public void getPage(){
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        // Clear local storage
-        js.executeScript("window.localStorage.clear();");
-        // Clear session storage
-        js.executeScript("window.sessionStorage.clear();");
-        // Clear cache
         driver.manage().deleteAllCookies();
-        driver.get("https://test-iti-testing-project-v1.pantheonsite.io/");
+        js.executeScript("window.localStorage.clear();");
+        js.executeScript("window.sessionStorage.clear();");
+        driver.navigate().to("https://test-iti-testing-project-v1.pantheonsite.io/");
+//        driver.navigate().to("https://live-iti-testing-project-v1.pantheonsite.io/");
     }
 
     @AfterMethod

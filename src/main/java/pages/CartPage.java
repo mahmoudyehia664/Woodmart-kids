@@ -18,7 +18,7 @@ public class CartPage extends AbstractPage{
 //    WebElement baseElement;
     WebElement product=null;
 //    By baseElementLocator=By.cssSelector(".cart tbody");
-    By openCheckoutPage=By.cssSelector(".cart tbody .checkout-button");
+    By openCheckoutPage=By.cssSelector(".checkout-button");
     By allProductsLocator=By.cssSelector(".cart tbody .cart_item");
     By totalPrice=By.cssSelector(".order-total bdi");
     By name =By.cssSelector(".cart tbody .product-name");

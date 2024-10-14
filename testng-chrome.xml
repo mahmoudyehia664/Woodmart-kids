@@ -1,71 +1,85 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.1.dtd">
 <suite name="All Test Suite">
 <!--    <parameter name="browser" value="Chrome"/>-->
-<!--    <parameter name="browser" value="Edge"/>-->
-    <parameter name="browser" value="Firefox"/>
+    <parameter name="browser" value="Edge"/>
+<!--    <parameter name="browser" value="Firefox"/>-->
     <listeners>
         <listener class-name="utils.Listeners"/>
     </listeners>
-    <test name="register">
+<!--    <test name="register">-->
+<!--        <classes>-->
+<!--            <class name="register.RegisterTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="login">-->
+<!--        <classes>-->
+<!--            <class name="login.LoginTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="lostPassword">-->
+<!--        <classes>-->
+<!--            <class name="lost.password.LostPasswordTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="privacyPage">-->
+<!--        <classes>-->
+<!--            <class name="privacy.page.OpenPrivacyPageWhileRegisterTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="homePage">-->
+<!--        <classes>-->
+<!--            <class name="home.page.OpenShopPageFromBannerTest"/>-->
+<!--            <class name="home.page.OpenCategoryPageTest"/>-->
+<!--            <class name="home.page.AddProductToCartTest"/>-->
+<!--            <class name="home.page.BuyBundleCollectionTest"/>-->
+<!--            <class name="home.page.OpenInstagramPageTest"/>-->
+<!--            <class name="home.page.OpenPostTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="contactUsPage">-->
+<!--        <classes>-->
+<!--            <class name="contactus.ContactUsTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="aboutUsPage">-->
+<!--        <classes>-->
+<!--            <class name="about.us.AboutUsTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="wishlist">-->
+<!--        <classes>-->
+<!--            <class name="wishlist.before.login.AddProductsToWishListBeforeLoginTest"/>-->
+<!--            <class name="wishlist.after.login.AddProductsToWishListAfterLoginTest"/>-->
+<!--            <class name="wishlist.after.login.IsProductsExistInMyWishlistAfterLogoutThenLoginTest"/>-->
+<!--            <class name="wishlist.after.login.RemoveProductFromWishlistTest"/>-->
+<!--            <class name="wishlist.after.login.AddProductsToWishListThenLoginTest"/>-->
+<!--            <class name="wishlist.after.login.AddNewWishlistGroupTest"/>-->
+<!--            <class name="wishlist.after.login.EditWishlistGroupNameTest"/>-->
+<!--            <class name="wishlist.after.login.RemoveWishlistGroupTest"/>-->
+<!--            <class name="wishlist.after.login.AddProductToCartFromWishlistTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="cartPage">-->
+<!--        <classes>-->
+<!--            <class name="cart.page.CheckProductSubTotalPriceCalculationTest"/>-->
+<!--            <class name="cart.page.CheckSubTotalPriceCalculationTest"/>-->
+<!--            <class name="cart.page.ChangeProductQuantityTest"/>-->
+<!--            <class name="cart.page.RemoveProductFromCartTest"/>-->
+<!--            <class name="cart.page.UndoRemoveProductFromCartTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="search">-->
+<!--        <classes>-->
+<!--            <class name="search.SearchForAProductUsingItIsNameTest"/>-->
+<!--            <class name="search.SearchForAProductUsingValidPartOfItIsNameTest"/>-->
+<!--            <class name="search.SearchForAProductUsingInvalidPartOfItIsNameTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+    <test name="checkout">
         <classes>
-            <class name="register.RegisterTest"/>
-        </classes>
-    </test>
-    <test name="login">
-        <classes>
-            <class name="login.LoginTest"/>
-        </classes>
-    </test>
-    <test name="lostPassword">
-        <classes>
-            <class name="lost.password.LostPasswordTest"/>
-        </classes>
-    </test>
-    <test name="privacyPage">
-        <classes>
-            <class name="privacy.page.OpenPrivacyPageWhileRegisterTest"/>
-        </classes>
-    </test>
-    <test name="homePage">
-        <classes>
-            <class name="home.page.OpenShopPageFromBannerTest"/>
-            <class name="home.page.OpenCategoryPageTest"/>
-            <class name="home.page.AddProductToCartTest"/>
-            <class name="home.page.BuyBundleCollectionTest"/>
-            <class name="home.page.OpenInstagramPageTest"/>
-            <class name="home.page.OpenPostTest"/>
-        </classes>
-    </test>
-    <test name="contactUsPage">
-        <classes>
-            <class name="contactus.ContactUsTest"/>
-        </classes>
-    </test>
-    <test name="aboutUsPage">
-        <classes>
-            <class name="about.us.AboutUsTest"/>
-        </classes>
-    </test>
-    <test name="wishlist">
-        <classes>
-            <class name="wishlist.before.login.AddProductsToWishListBeforeLoginTest"/>
-            <class name="wishlist.after.login.AddProductsToWishListAfterLoginTest"/>
-            <class name="wishlist.after.login.IsProductsExistInMyWishlistAfterLogoutThenLoginTest"/>
-            <class name="wishlist.after.login.RemoveProductFromWishlistTest"/>
-            <class name="wishlist.after.login.AddProductsToWishListThenLoginTest"/>
-            <class name="wishlist.after.login.AddNewWishlistGroupTest"/>
-            <class name="wishlist.after.login.EditWishlistGroupNameTest"/>
-            <class name="wishlist.after.login.RemoveWishlistGroupTest"/>
-            <class name="wishlist.after.login.AddProductToCartFromWishlistTest"/>
-        </classes>
-    </test>
-    <test name="cartPage">
-        <classes>
-            <class name="cart.page.CheckProductSubTotalPriceCalculationTest"/>
-            <class name="cart.page.CheckSubTotalPriceCalculationTest"/>
-            <class name="cart.page.ChangeProductQuantityTest"/>
-            <class name="cart.page.RemoveProductFromCartTest"/>
-            <class name="cart.page.UndoRemoveProductFromCartTest"/>
+            <class name="checkout.page.CheckoutUsingCashTest"/>
+            <class name="checkout.page.CheckoutUsingBankcardTest"/>
+            <class name="checkout.page.CheckoutUsingPaypalTest"/>
         </classes>
     </test>
 </suite>
