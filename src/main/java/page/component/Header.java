@@ -1,6 +1,7 @@
 package page.component;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -77,17 +78,38 @@ public class Header {
     }
     public boolean sendTextToSearchFor(String textToSearchFor){
         openSearchScreen();
-        wait=new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(By.className("wd-search-inited"))).sendKeys(textToSearchFor);
-        List<WebElement> elements = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector(".suggestion-content strong")));
-        for (WebElement element:elements){
-            if(!element.getText().toLowerCase().contains(textToSearchFor)){
-                closeSearchScreen();
-                return false;
+        wait=new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement searchBox=wait.until(ExpectedConditions.elementToBeClickable(By.className("wd-search-inited")));
+        searchBox.clear();
+        searchBox.sendKeys(textToSearchFor);
+        try {
+            List<WebElement> elements = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector(".suggestion-content strong")));
+            for (WebElement element:elements){
+                if(!element.getText().toLowerCase().contains(textToSearchFor.toLowerCase())){
+                    closeSearchScreen();
+                    return false;
+                }
             }
+        } catch (TimeoutException e) {
+            return false;
         }
         closeSearchScreen();
         return true;
+    }
+    public ProductPage searchForProductUsingItIsExactlyName(String productName){
+        openSearchScreen();
+        wait=new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement searchBox=wait.until(ExpectedConditions.elementToBeClickable(By.className("wd-search-inited")));
+        searchBox.clear();
+        searchBox.sendKeys(productName);
+        synchronized (this){
+            try {
+                wait(5000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return new ProductPage(driver);
     }
 
     /**
