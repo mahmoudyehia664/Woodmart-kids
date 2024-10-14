@@ -56,7 +56,6 @@ public class BaseTest {
         // Clear cache
         driver.manage().deleteAllCookies();
         driver.get("https://test-iti-testing-project-v1.pantheonsite.io/");
-        homePage.header.logout();
     }
 
     @AfterMethod

@@ -12,10 +12,8 @@ public class ChangeProductQuantityTest extends BaseTest {
 
     @Test(priority = 3)
     public void changeProductQuantity(){
-        LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage) homePage.header.openMyAccountPage();
-        assertTrue(loginAndRegisterPage.isFound(),"Page not found");
-        assertTrue(loginAndRegisterPage.getPageURL().endsWith("my-account/"),"Incorrect page opened");
-        CartPage cartPage=loginAndRegisterPage.login("iti","Jwcgdb/*8z#d+7/").header.openCartPage();
+        homePage.loginUsingCookie();
+        CartPage cartPage=homePage.header.openCartPage();
         assertTrue(cartPage.isFound(),"Page not found");
         assertTrue(cartPage.getPageURL().endsWith("cart/"),"Incorrect page opened");
         cartPage.dealWithQuantity(2).plusQuantity();

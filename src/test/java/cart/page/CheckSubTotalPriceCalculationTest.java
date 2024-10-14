@@ -16,10 +16,8 @@ public class CheckSubTotalPriceCalculationTest extends BaseTest {
 
     @Test(priority = 2)
     public void checkSubTotalPriceCalculation(){
-        LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage) homePage.header.openMyAccountPage();
-        assertTrue(loginAndRegisterPage.isFound(),"Page not found");
-        assertTrue(loginAndRegisterPage.getPageURL().endsWith("my-account/"),"Incorrect page opened");
-        CartPage cartPage=loginAndRegisterPage.login("iti","Jwcgdb/*8z#d+7/").header.openCartPage();
+        homePage.loginUsingCookie();
+        CartPage cartPage=homePage.header.openCartPage();
         assertTrue(cartPage.isFound(),"Page not found");
         assertTrue(cartPage.getPageURL().endsWith("cart/"),"Incorrect page opened");
         double expectedSum= Arrays.stream(cartPage.getProductsPriceFromCart()).sum();

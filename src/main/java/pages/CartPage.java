@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import page.component.QuantityController;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +20,7 @@ public class CartPage extends AbstractPage{
 //    By baseElementLocator=By.cssSelector(".cart tbody");
     By openCheckoutPage=By.cssSelector(".cart tbody .checkout-button");
     By allProductsLocator=By.cssSelector(".cart tbody .cart_item");
-    By totalPrice=By.cssSelector(".cart tbody .order-total bdi");
+    By totalPrice=By.cssSelector(".order-total bdi");
     By name =By.cssSelector(".cart tbody .product-name");
     By quantity=By.cssSelector(".cart tbody .qty");
     By price=By.cssSelector(".cart tbody bdi");
@@ -224,9 +226,15 @@ public class CartPage extends AbstractPage{
         int i=0;
         for (WebElement element:elements){
             if(header.getCurrentCurrency().equals("USD")){
-                prices[i]=Double.parseDouble(getProductSubTotalPrice(element).replaceAll("[,$]", ""));
+                /**********/
+                prices[i] = new BigDecimal(Double.parseDouble(getProductSubTotalPrice(element).replaceAll("[,$]", ""))).setScale(2, RoundingMode.HALF_UP).doubleValue();
+                /**********/
+//                prices[i]=Double.parseDouble(getProductSubTotalPrice(element).replaceAll("[,$]", ""));
             }else {
-                prices[i]=Double.parseDouble(getProductSubTotalPrice(element).replaceAll("[.€EGP]", "").replace(",", "."));
+//                prices[i]=Double.parseDouble(getProductSubTotalPrice(element).replaceAll("[.€EGP]", "").replace(",", "."));
+                /***/
+                prices[i]=new BigDecimal(Double.parseDouble(getProductSubTotalPrice(element).replaceAll("[.€EGP]", "").replace(",", "."))).setScale(2, RoundingMode.HALF_UP).doubleValue();
+                /***/
             }
             i++;
         }

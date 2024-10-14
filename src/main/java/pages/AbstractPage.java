@@ -1,9 +1,6 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page.component.Header;
@@ -60,5 +57,9 @@ public abstract class AbstractPage {
                 throw new RuntimeException(e);
             }
         }
+    }
+    public void loginUsingCookie(){
+        driver.manage().addCookie(new Cookie("wordpress_logged_in_8f950562d6567b9e4af60820f404d3c0","iti|1729074502|erhsWt4iHC34cp23cfnm21TSDX7Wivbn13zlWY1M3Ir|e95818810815e4213725fb206bf985b0b40c4c50c88a3b1fe9a017c53b1ba9c3"));
+        driver.manage().addCookie(new Cookie("wordpress_sec_8f950562d6567b9e4af60820f404d3c0","iti|1729074502|erhsWt4iHC34cp23cfnm21TSDX7Wivbn13zlWY1M3Ir|7b429f6ec05f0211d5058be1ef656a200d34a5b5d4c9ffe8b1551edac02c5473"));
     }
 }

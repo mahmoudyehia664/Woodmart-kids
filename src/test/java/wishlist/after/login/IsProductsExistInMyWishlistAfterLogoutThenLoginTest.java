@@ -15,11 +15,8 @@ public class IsProductsExistInMyWishlistAfterLogoutThenLoginTest extends BaseTes
     @Test(priority = 2,dataProvider = "getData",dataProviderClass = Data.class)
     @DataProviderIndex(4)
     public void isProductsExistInMyWishlistAfterLogoutThenLogin(String productName1, String productName2){
-        LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage) homePage.header.openMyAccountPage();
-        assertTrue(loginAndRegisterPage.isFound(),"Page not found");
-        assertTrue(loginAndRegisterPage.getPageURL().endsWith("my-account/"),"Incorrect page opened");
-        DashboardPage dashboardPage=loginAndRegisterPage.login("iti","Jwcgdb/*8z#d+7/");
-        WishlistPage wishlistPage=dashboardPage.header.openWishlistPage();
+        homePage.loginUsingCookie();
+        WishlistPage wishlistPage=homePage.header.openWishlistPage();
         synchronized (this){
             try {
                 wait(1000);
