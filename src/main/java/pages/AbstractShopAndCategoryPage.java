@@ -5,9 +5,18 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import page.component.Categories;
+import page.component.ProductCart;
+import page.component.QuickView;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeSet;
 
 public class AbstractShopAndCategoryPage extends AbstractPage{
     public Categories categories;
+//    public ProductCart productCart;
     WebElement baseElement;
     By baseElementLocator=By.cssSelector(".elementor-widget-wd_sidebar .elementor-widget-container");
     By appliedFilters=By.cssSelector(".wd-active-filters .widget");
@@ -21,6 +30,9 @@ public class AbstractShopAndCategoryPage extends AbstractPage{
     public AbstractShopAndCategoryPage(WebDriver driver){
         super(driver);
         categories=new Categories(driver);
+    }
+    public ProductCart dealWithProduct(){
+        return new ProductCart(driver);
     }
 
     private WebElement getBaseElement(){
@@ -84,6 +96,11 @@ public class AbstractShopAndCategoryPage extends AbstractPage{
         return this;
     }
 
+    /**
+     *
+     * @param filter for (color or brand or size)
+     * @return
+     */
     public AbstractShopAndCategoryPage applyFilter(String filter){
         getBaseElement().findElement(By.xpath("//a[contains(.,'"+filter+"')]")).click();
         waitForMilliseconds(2000);
@@ -108,6 +125,47 @@ public class AbstractShopAndCategoryPage extends AbstractPage{
         driver.findElement(clearAllFiltersButton).click();
         waitForMilliseconds(3000);
         return this;
+    }
+
+
+    public TreeSet<Double> getPricesOfAllProductsInThePage(){
+        TreeSet<Double> prices=new TreeSet<>();
+        List<WebElement> products=driver.findElements(By.cssSelector(".wd-product"));
+        for (WebElement product:products){
+            /***/
+            if(header.getCurrentCurrency().equals("USD")){
+                prices.add(new BigDecimal(Double.parseDouble(new ProductCart(driver,product).getProductPrice().replaceAll("[,$]", ""))).setScale(2, RoundingMode.HALF_UP).doubleValue());
+            }else {
+                prices.add(new BigDecimal(Double.parseDouble(new ProductCart(driver,product).getProductPrice().replaceAll("[.€EGP]", "").replace(",", "."))).setScale(2, RoundingMode.HALF_UP).doubleValue());
+            }
+        }
+        return prices;
+    }
+    public TreeSet<String> getBrandsOfAllProductsInThePage(){
+        TreeSet<String> brands=new TreeSet<>();
+        List<WebElement> products=driver.findElements(By.cssSelector(".wd-product"));
+        for (WebElement product:products){
+            brands.add(new ProductCart(driver,product).getProductBrand());
+        }
+        return brands;
+    }
+    public TreeSet<String> getColorsOfAllProductsInThePage(){
+        TreeSet<String> colors=new TreeSet<>();
+        List<WebElement> products=driver.findElements(By.cssSelector(".wd-product"));
+        for (WebElement product:products){
+            colors.add(new QuickView(driver,product).getProductColor());
+            getActions().sendKeys(Keys.ESCAPE).perform();
+        }
+        return colors;
+    }
+    public TreeSet<String> getSizesOfAllProductsInThePage(){
+        TreeSet<String> sizes=new TreeSet<>();
+        List<WebElement> products=driver.findElements(By.cssSelector(".wd-product"));
+        for (WebElement product:products){
+            sizes.add(new QuickView(driver,product).getProductSize());
+            getActions().sendKeys(Keys.ESCAPE).perform();
+        }
+        return sizes;
     }
 
 

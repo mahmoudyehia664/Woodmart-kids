@@ -181,6 +181,9 @@ public class ProductCart {
         return productCart.findElement(By.cssSelector(".wd-product-brands-links a")).getText();
     }
     public String getProductPrice(){
+        if(productCart.findElements(By.cssSelector(".price bdi")).size()>1){
+            return productCart.findElement(By.cssSelector(".price ins bdi")).getText();
+        }
         return productCart.findElement(By.cssSelector(".price bdi")).getText();
     }
     public String getProductURL(){

@@ -3,6 +3,7 @@ package page.component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.CheckoutPage;
@@ -33,11 +34,17 @@ public class QuickView {
     public QuickView(WebDriver _driver, WebElement product){
         driver=_driver;
         productCart=product;
+        /***/
+        Actions actions=new Actions(driver);
+        actions.moveToElement(product).perform();
+        /***/
         openQuickView();
     }
 
     private void openQuickView(){
         WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(10));
+        /***/
+        /***/
         wait.until(ExpectedConditions.elementToBeClickable(productCart.findElement(By.cssSelector(".quick-view a")))).click();
         baseElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("product-quick-view")));
 //        quantityController=new QuantityController(driver,baseElement);

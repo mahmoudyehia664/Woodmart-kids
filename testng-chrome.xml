@@ -75,11 +75,20 @@
 <!--            <class name="search.SearchForAProductUsingInvalidPartOfItIsNameTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
-    <test name="checkout">
+<!--    <test name="checkout">-->
+<!--        <classes>-->
+<!--            <class name="checkout.page.CheckoutUsingCashTest"/>-->
+<!--            <class name="checkout.page.CheckoutUsingBankcardTest"/>-->
+<!--            <class name="checkout.page.CheckoutUsingPaypalTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+    <test name="filter">
         <classes>
-            <class name="checkout.page.CheckoutUsingCashTest"/>
-            <class name="checkout.page.CheckoutUsingBankcardTest"/>
-            <class name="checkout.page.CheckoutUsingPaypalTest"/>
+<!--            <class name="filter.product.FilterProductByPriceTest"/>-->
+<!--            <class name="filter.product.FilterProductsByPriceRangeTest"/>-->
+<!--            <class name="filter.product.FilterProductByBrandTest"/>-->
+<!--            <class name="filter.product.FilterProductByColorTest"/>-->
+<!--            <class name="filter.product.FilterProductBySizeTest"/>-->
         </classes>
     </test>
 </suite>
