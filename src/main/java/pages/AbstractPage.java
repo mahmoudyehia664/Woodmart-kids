@@ -39,9 +39,9 @@ public abstract class AbstractPage {
      */
     public boolean isFound(){
         try {
-            driver.findElement(By.cssSelector(".page-header h3"));
-            return false;
+            return !driver.findElement(By.cssSelector(".page-header h3")).getText().equals("NOT FOUND");
         } catch (Exception e) {
+            e.printStackTrace();
             return true;
         }
     }

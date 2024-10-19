@@ -54,6 +54,7 @@ public class LoginAndRegisterPage extends AbstractPage{
     public PrivacyPage openPrivacyPage(){
         switchTo("register");
         driver.findElement(By.cssSelector(".woocommerce-privacy-policy-link")).click();
+        waitForMilliseconds(3000);
         return new PrivacyPage(driver);
     }
 }

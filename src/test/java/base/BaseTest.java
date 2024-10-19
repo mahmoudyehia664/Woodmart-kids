@@ -1,6 +1,7 @@
 package base;
 
 import com.google.common.io.Files;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -17,12 +18,12 @@ import java.util.Arrays;
 import java.util.Map;
 
 
-public class BaseTest {
+public class BaseTest extends AbstractTestNGCucumberTests {
     protected static HomePage homePage;
     protected static WebDriver driver;
     @BeforeSuite
     @Parameters({"browser"})
-    public static void test(String browser, ITestContext context){
+    public static void test(@Optional(value="Chrome") String browser, ITestContext context){
 //        context.setAttribute("browser", browser);
         switch (browser){
             case "Chrome":
@@ -33,6 +34,7 @@ public class BaseTest {
                         "profile.password_manager_enabled", false
                 ));
                 driver=new ChromeDriver(chromeOptions);
+                context.setAttribute("browser", browser);
                 break;
             case "Edge":
                 EdgeOptions edgeOptions = new EdgeOptions();
@@ -47,18 +49,27 @@ public class BaseTest {
         homePage=new HomePage(driver,"https://test-iti-testing-project-v1.pantheonsite.io/");
 //        homePage=new HomePage(driver,"https://live-iti-testing-project-v1.pantheonsite.io/");
     }
-    @BeforeMethod
-    public void getPage(){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.localStorage.clear();");
-        js.executeScript("window.sessionStorage.clear();");
-        driver.manage().deleteAllCookies();
-        driver.get("https://test-iti-testing-project-v1.pantheonsite.io/");
-//        driver.navigate().to("https://live-iti-testing-project-v1.pantheonsite.io/");
-    }
+//    @BeforeMethod
+//    public void getPage(){
+//        JavascriptExecutor js = (JavascriptExecutor) driver;
+//        js.executeScript("window.localStorage.clear();");
+//        js.executeScript("window.sessionStorage.clear();");
+//        driver.manage().deleteAllCookies();
+//        driver.get("https://test-iti-testing-project-v1.pantheonsite.io/");
+////        driver.navigate().to("https://live-iti-testing-project-v1.pantheonsite.io/");
+//    }
 
     @AfterMethod
     public void recordFailure(ITestResult result){
+        if(result.getTestContext().getCurrentXmlTest().getParameter("browser")!=null){
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("window.localStorage.clear();");
+            js.executeScript("window.sessionStorage.clear();");
+            driver.manage().deleteAllCookies();
+            driver.get("https://test-iti-testing-project-v1.pantheonsite.io/");
+//            driver.navigate().to("https://live-iti-testing-project-v1.pantheonsite.io/");
+        }
+        /************/
         if (ITestResult.FAILURE == result.getStatus()){
             var camera=(TakesScreenshot)driver;
             File screenShot=camera.getScreenshotAs(OutputType.FILE);
@@ -67,7 +78,11 @@ public class BaseTest {
                 Object[] params = result.getParameters();
                 String parameters = (params.length == 0) ? "" : Arrays.toString(params);
                 String name=result.getMethod().getMethodName()+parameters;
-                Files.move(screenShot,new File("src/test/screenshot/"+name.replaceAll("[^a-zA-Z0-9 @.,\\[\\]]", "")+" in "+ result.getTestContext().getCurrentXmlTest().getParameter("browser")+" browser.png"));
+                if(result.getTestContext().getCurrentXmlTest().getParameter("browser")==null){
+                    Files.move(screenShot,new File("src/test/screenshot/"+name.replaceAll("[^a-zA-Z0-9 @.,\\[\\]]", "")+" in "+ result.getTestContext().getAttribute("browser")+" browser.png"));
+                }else {
+                    Files.move(screenShot,new File("src/test/screenshot/"+name.replaceAll("[^a-zA-Z0-9 @.,\\[\\]]", "")+" in "+ result.getTestContext().getCurrentXmlTest().getParameter("browser")+" browser.png"));
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
