@@ -7,11 +7,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.WishlistPage;
 
 import java.time.Duration;
+import java.util.Arrays;
 
 public class PopupAddToWishlist {
 
     WebDriver driver;
     WebDriverWait wait;
+    By wishlistNamesLocator=By.cssSelector(".wd-wishlist-group-list");
     public PopupAddToWishlist(WebDriver _driver){
         driver=_driver;
         wait=new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -35,7 +37,7 @@ public class PopupAddToWishlist {
     }
 
     /**
-     * add product to the default wishlist(My wishlist)
+     * add product to the default wishlist(My wishlist if not changed)
      */
     public void addToWishlistThenBackToShop(){
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".wd-wishlist-save-btn"))).click();
@@ -43,7 +45,7 @@ public class PopupAddToWishlist {
         waitForMilliseconds(1500);
     }
     /**
-     * add product to the default wishlist(My wishlist)
+     * add product to the default wishlist(My wishlist if not changed)
      */
     public WishlistPage addToWishlistThenOpenWishlist(){
         driver.findElement(By.cssSelector(".wd-wishlist-save-btn")).click();
@@ -62,8 +64,10 @@ public class PopupAddToWishlist {
      * @param wishlistName add product to selected wishlist
      */
     public void addToWishlistThenBackToShop(String wishlistName){
+        String[] wishlistNames= driver.findElement(wishlistNamesLocator).getText().replace("\nAdd new wishlist","").replace("\n",",").split(",");
+        int index=Arrays.asList(wishlistNames).indexOf(wishlistName)+1;
         try {
-            driver.findElement(By.xpath("//label[contains(.,'"+wishlistName+"')]")).click();
+            driver.findElement(By.xpath("(//ul/li/label)["+index+"]")).click();
         } catch (Exception e) {
             System.out.println("This wishlist group not existing , you should add it first");
             e.printStackTrace();
@@ -83,8 +87,13 @@ public class PopupAddToWishlist {
      * @param wishlistName add product to selected wishlist
      */
     public WishlistPage addToWishlistThenOpenWishlist(String wishlistName){
+        String[] wishlistNames= driver.findElement(wishlistNamesLocator).getText().replace("\nAdd new wishlist","").replace("\n",",").split(",");
+//        System.out.println(Arrays.toString(wishlistNames));
+        int index=Arrays.asList(wishlistNames).indexOf(wishlistName)+1;
+//        System.out.println(index);
         try {
-            driver.findElement(By.xpath("//label[contains(.,'"+wishlistName+"')]")).click();
+//            System.out.println(driver.findElement(By.xpath("(//ul/li/label)["+index+"]")).getText());
+            driver.findElement(By.xpath("(//ul/li/label)["+index+"]")).click();
         } catch (Exception e) {
             System.out.println("This wishlist group not existing , you should add it first");
             e.printStackTrace();
@@ -99,9 +108,17 @@ public class PopupAddToWishlist {
         openWishlistPage();
         return new WishlistPage(driver);
     }
-    public PopupAddToWishlist addNewWishList(String wishlistGroupName){
+    public void addToNewWishListThenBackToShop(String wishlistGroupName){
         driver.findElement(By.cssSelector(".wd-wishlist-add-group a")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".wd-wishlist-group-name"))).sendKeys(wishlistGroupName);
+        driver.findElement(By.cssSelector(".wd-wishlist-save-btn")).click();
+        backToShop();
+    }
+    public PopupAddToWishlist addToNewWishListThenOpenWishlistPage(String wishlistGroupName){
+        driver.findElement(By.cssSelector(".wd-wishlist-add-group a")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".wd-wishlist-group-name"))).sendKeys(wishlistGroupName);
+        driver.findElement(By.cssSelector(".wd-wishlist-save-btn")).click();
+        openWishlistPage();
         return this;
     }
 }

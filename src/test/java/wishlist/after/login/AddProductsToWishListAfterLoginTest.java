@@ -2,7 +2,7 @@ package wishlist.after.login;
 
 import annotation.DataProviderIndex;
 import base.BaseTest;
-import data.Data;
+import data.ExcelData;
 import org.testng.annotations.Test;
 import pages.DashboardPage;
 import pages.LoginAndRegisterPage;
@@ -13,7 +13,7 @@ import static org.testng.Assert.assertTrue;
 
 public class AddProductsToWishListAfterLoginTest extends BaseTest {
 
-    @Test(priority = 1,dataProvider = "getData",dataProviderClass = Data.class)
+    @Test(priority = 1,dataProvider = "getData",dataProviderClass = ExcelData.class)
     @DataProviderIndex(4)
     public void addProductsToWishListAfterLogin(String productName1, String productName2){
         LoginAndRegisterPage loginAndRegisterPage=(LoginAndRegisterPage) homePage.header.openMyAccountPage();

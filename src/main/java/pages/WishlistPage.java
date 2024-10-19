@@ -13,10 +13,12 @@ public class WishlistPage extends AbstractPage{
     WebElement wishlistGroup;
     public WishlistPage(WebDriver driver){
         super(driver);
+//        driver.navigate().refresh();
 //        productCart=new ProductCart(driver);
         if (header.isUserLogin())
         {
             wishlistGroup=driver.findElement(By.cssSelector(".wd-wishlist-group"));
+//            wishlistGroup=driver.findElement(By.xpath("(//div[@class='wd-wishlist-group'])[1]"));
         }
     }
 
@@ -61,7 +63,7 @@ public class WishlistPage extends AbstractPage{
         wishlistGroup=driver.findElement(By.xpath("//h4[contains(.,'"+wishlistGroupName+"')]/ancestor::div[@class='wd-wishlist-group']"));
         int y=wishlistGroup.getLocation().y-155;
         getJs().executeScript("window.scrollTo(0, "+y+");");
-        waitForMilliseconds(1500);
+        waitForMilliseconds(500);
     }
     public int numberOfWishlistGroups(){
         return driver.findElements(By.cssSelector(".wd-wishlist-group")).size();
@@ -78,8 +80,14 @@ public class WishlistPage extends AbstractPage{
      * @return
      */
     public ProductCart dealWithProduct(String wishlistGroupName,String productName){
-        selectWishlistGroup(wishlistGroupName);
-        WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class,'type-product')]"));
+//        selectWishlistGroup(wishlistGroupName);
+//        WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class,'type-product')]"));
+//        WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[@class='product-wrapper']"));
+        /******Working****/
+        WebElement productCart=driver.findElement(By.xpath("//h4[contains(.,'"+wishlistGroupName+"')]/ancestor::div[@class='wd-wishlist-group']//div/h3/a[.='"+productName+"']/ancestor::div[@class='product-wrapper']"));
+        int y=productCart.getLocation().y-155;
+        getJs().executeScript("window.scrollTo(0, "+y+");");
+        /***********/
         return new ProductCart(driver,productCart);
     }
 
@@ -89,7 +97,11 @@ public class WishlistPage extends AbstractPage{
      * @return
      */
     public ProductCart dealWithProduct(String productName){
-        WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class,'type-product')]"));
+//        System.out.println("hiiiiiiiiiiiiiiiiiiii");
+//        wishlistGroup=driver.findElement(By.xpath("(//div[@class='wd-wishlist-group'])[1]"));
+        /********/
+        WebElement productCart=driver.findElement(By.xpath("(//div[@class='wd-wishlist-group'])[1]//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class,'type-product')]"));
+//        WebElement productCart=wishlistGroup.findElement(By.xpath("//div/h3/a[.='"+productName+"']/ancestor::div[contains(@class,'type-product')]"));
         return new ProductCart(driver,productCart);
     }
 

@@ -11,7 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-public class Data {
+public class ExcelData {
     @DataProvider
     public Object[][] getData(Method method) throws IOException {
         DataProviderIndex indexAnnotation = method.getAnnotation(DataProviderIndex.class);

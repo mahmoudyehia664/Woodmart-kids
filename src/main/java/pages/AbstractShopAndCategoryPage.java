@@ -16,7 +16,7 @@ import java.util.TreeSet;
 
 public class AbstractShopAndCategoryPage extends AbstractPage{
     public Categories categories;
-//    public ProductCart productCart;
+    public ProductCart productCart;
     WebElement baseElement;
     By baseElementLocator=By.cssSelector(".elementor-widget-wd_sidebar .elementor-widget-container");
     By appliedFilters=By.cssSelector(".wd-active-filters .widget");
@@ -30,6 +30,7 @@ public class AbstractShopAndCategoryPage extends AbstractPage{
     public AbstractShopAndCategoryPage(WebDriver driver){
         super(driver);
         categories=new Categories(driver);
+        productCart=new ProductCart(driver);
     }
     public ProductCart dealWithProduct(){
         return new ProductCart(driver);

@@ -1,21 +1,8 @@
-import annotation.DataProviderIndex;
-import com.google.common.io.Files;
-import data.Data;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import pages.CheckoutPage;
 import pages.HomePage;
-import pages.LoginAndRegisterPage;
-
-import java.io.File;
-import java.util.Arrays;
 
 import static org.testng.Assert.*;
 

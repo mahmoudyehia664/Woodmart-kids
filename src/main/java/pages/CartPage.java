@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -46,8 +47,14 @@ public class CartPage extends AbstractPage{
         }
     }
     public CheckoutPage openCheckoutPage(){
-        driver.findElement(openCheckoutPage).click();
-        return new CheckoutPage(driver);
+        try {
+            driver.findElement(openCheckoutPage).click();
+            return new CheckoutPage(driver);
+        } catch (NoSuchElementException e) {
+            System.out.println("No products in the cart");
+            throw new RuntimeException(e);
+        }
+
     }
     public CartPage dealWithQuantity(int index){
         if(!checkIndex(index)){

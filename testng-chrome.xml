@@ -1,11 +1,23 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.1.dtd">
 <suite name="All Test Suite">
-<!--    <parameter name="browser" value="Chrome"/>-->
-    <parameter name="browser" value="Edge"/>
+    <parameter name="browser" value="Chrome"/>
+<!--    <parameter name="browser" value="Edge"/>-->
 <!--    <parameter name="browser" value="Firefox"/>-->
     <listeners>
         <listener class-name="utils.Listeners"/>
     </listeners>
+<!--    <test name="fullCycle">-->
+<!--        <classes>-->
+<!--            <class name="E2E.EndToEndTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="checkout">-->
+<!--        <classes>-->
+<!--            <class name="checkout.page.CheckoutUsingCashTest"/>-->
+<!--            <class name="checkout.page.CheckoutUsingBankcardTest"/>-->
+<!--            <class name="checkout.page.CheckoutUsingPaypalTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 <!--    <test name="register">-->
 <!--        <classes>-->
 <!--            <class name="register.RegisterTest"/>-->
@@ -46,8 +58,8 @@
 <!--            <class name="about.us.AboutUsTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
-<!--    <test name="wishlist">-->
-<!--        <classes>-->
+    <test name="wishlist">
+        <classes>
 <!--            <class name="wishlist.before.login.AddProductsToWishListBeforeLoginTest"/>-->
 <!--            <class name="wishlist.after.login.AddProductsToWishListAfterLoginTest"/>-->
 <!--            <class name="wishlist.after.login.IsProductsExistInMyWishlistAfterLogoutThenLoginTest"/>-->
@@ -57,8 +69,8 @@
 <!--            <class name="wishlist.after.login.EditWishlistGroupNameTest"/>-->
 <!--            <class name="wishlist.after.login.RemoveWishlistGroupTest"/>-->
 <!--            <class name="wishlist.after.login.AddProductToCartFromWishlistTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+        </classes>
+    </test>
 <!--    <test name="cartPage">-->
 <!--        <classes>-->
 <!--            <class name="cart.page.CheckProductSubTotalPriceCalculationTest"/>-->
@@ -75,20 +87,13 @@
 <!--            <class name="search.SearchForAProductUsingInvalidPartOfItIsNameTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
-<!--    <test name="checkout">-->
+<!--    <test name="filter">-->
 <!--        <classes>-->
-<!--            <class name="checkout.page.CheckoutUsingCashTest"/>-->
-<!--            <class name="checkout.page.CheckoutUsingBankcardTest"/>-->
-<!--            <class name="checkout.page.CheckoutUsingPaypalTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-    <test name="filter">
-        <classes>
 <!--            <class name="filter.product.FilterProductByPriceTest"/>-->
 <!--            <class name="filter.product.FilterProductsByPriceRangeTest"/>-->
 <!--            <class name="filter.product.FilterProductByBrandTest"/>-->
 <!--            <class name="filter.product.FilterProductByColorTest"/>-->
 <!--            <class name="filter.product.FilterProductBySizeTest"/>-->
-        </classes>
-    </test>
+<!--        </classes>-->
+<!--    </test>-->
 </suite>

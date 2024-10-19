@@ -112,7 +112,8 @@ public class QuickView {
     }
 
     public PopupAddedToCart addToCart(){
-        baseElement.findElement(addToCartButton).click();
+        new WebDriverWait(driver,Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(addToCartButton)).click();
+//        baseElement.findElement(addToCartButton).click();
         return new PopupAddedToCart(driver);
     }
     public CheckoutPage buyNow(){

@@ -23,12 +23,12 @@ public class CheckProductSubTotalPriceCalculationTest extends BaseTest {
         double productPrice= cartPage.getProductPrice(1);
         cartPage.dealWithQuantity(1).setQuantity(3);
         double actualTotalPrice= cartPage.getProductSubTotalPrice(1);
-//        double expectedTotalPrice=productPrice*cartPage.getProductQuantity(1);
+        double expectedTotalPrice=productPrice*cartPage.getProductQuantity(1);
         /**********/
 
-        double expectedTotalPrice = productPrice * cartPage.getProductQuantity(1);
-        BigDecimal bd = new BigDecimal(expectedTotalPrice).setScale(2, RoundingMode.HALF_UP);
-        expectedTotalPrice = bd.doubleValue();
+//        double expectedTotalPrice = productPrice * cartPage.getProductQuantity(6);
+//        BigDecimal bd = new BigDecimal(expectedTotalPrice).setScale(2, RoundingMode.HALF_UP);
+//        expectedTotalPrice = bd.doubleValue();
 
         /**********/
         System.out.println("actual :"+actualTotalPrice);

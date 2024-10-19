@@ -2,17 +2,15 @@ package wishlist.after.login;
 
 import annotation.DataProviderIndex;
 import base.BaseTest;
-import data.Data;
+import data.ExcelData;
 import org.testng.annotations.Test;
-import pages.DashboardPage;
-import pages.LoginAndRegisterPage;
 import pages.WishlistPage;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class IsProductsExistInMyWishlistAfterLogoutThenLoginTest extends BaseTest {
-    @Test(priority = 2,dataProvider = "getData",dataProviderClass = Data.class)
+    @Test(priority = 2,dataProvider = "getData",dataProviderClass = ExcelData.class)
     @DataProviderIndex(4)
     public void isProductsExistInMyWishlistAfterLogoutThenLogin(String productName1, String productName2){
         homePage.loginUsingCookie();

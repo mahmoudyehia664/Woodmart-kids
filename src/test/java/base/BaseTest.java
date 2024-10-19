@@ -50,10 +50,10 @@ public class BaseTest {
     @BeforeMethod
     public void getPage(){
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        driver.manage().deleteAllCookies();
         js.executeScript("window.localStorage.clear();");
         js.executeScript("window.sessionStorage.clear();");
-        driver.navigate().to("https://test-iti-testing-project-v1.pantheonsite.io/");
+        driver.manage().deleteAllCookies();
+        driver.get("https://test-iti-testing-project-v1.pantheonsite.io/");
 //        driver.navigate().to("https://live-iti-testing-project-v1.pantheonsite.io/");
     }
 
@@ -75,6 +75,6 @@ public class BaseTest {
     }
     @AfterSuite
     public void tearDown(){
-        driver.quit();
+//        driver.quit();
     }
 }

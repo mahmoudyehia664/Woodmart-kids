@@ -1,11 +1,7 @@
 package wishlist.after.login;
 
-import annotation.DataProviderIndex;
 import base.BaseTest;
-import data.Data;
 import org.testng.annotations.Test;
-import pages.DashboardPage;
-import pages.LoginAndRegisterPage;
 import pages.WishlistPage;
 
 import static org.testng.Assert.assertFalse;
